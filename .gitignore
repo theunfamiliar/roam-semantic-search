@@ -1,0 +1,24 @@
+# Ignore all app-generated and private data
+data/
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+
+# macOS system files
+.DS_Store
+
+# Embedding index
+*.faiss
+
+# Local environment config
+.env
+
+# VSCode settings (optional, good if you're sharing the repo)
+.vscode/
+
+# Python virtual environment
+venv/
+
+# Deployment logs
+logs/deploy-*.log
