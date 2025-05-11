@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e  # Exit on any error
+set -e
 
 # ─────────────────────────────────────────────────────────────
 # 📝 Accept optional commit message
@@ -21,7 +21,7 @@ exec > >(tee -a "$logfile") 2>&1
 echo "▶️ Committing changes to GitHub..."
 git add .
 git commit -m "$COMMIT_MSG" || echo "⚠️ Nothing to commit."
-git push origin main
+git push --force origin main
 
 # ─────────────────────────────────────────────────────────────
 # 📡 SSH into VPS and deploy
@@ -36,8 +36,9 @@ ssh singularity << 'ENDSSH'
 
   cd /root/roam-semantic-search
 
-  echo "📦 Pulling latest from GitHub..."
-  git pull origin main
+  echo "📦 Forcing latest from GitHub (reset)..."
+  git fetch origin
+  git reset --hard origin/main
 
   echo "🧠 Checking for server.py..."
   if [ ! -f server.py ]; then
