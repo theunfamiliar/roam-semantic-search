@@ -45,6 +45,10 @@ METADATA_FILE = os.path.join(DATA_DIR, "metadata.json")
 os.makedirs(HIDDEN_DATA_DIR, exist_ok=True)
 os.makedirs(DATA_DIR, exist_ok=True)
 
+# Use environment variables for auth
+USERNAME = os.getenv("USERNAME", "admin")
+PASSWORD = os.getenv("PASSWORD", "secret")
+
 def get_model():
     global _model
     if _model is None:
@@ -53,8 +57,8 @@ def get_model():
     return _model
 
 def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
-    if credentials.username != "admin" or credentials.password != "secret":
-        raise HTTPException(status_code=401, detail="Unauthorized. Use Basic Auth: -u admin:secret")
+    if credentials.username != USERNAME or credentials.password != PASSWORD:
+        raise HTTPException(status_code=401, detail="Unauthorized. Use correct Basic Auth.")
     return True
 
 @app.get("/")

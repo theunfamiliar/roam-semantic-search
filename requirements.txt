@@ -3,3 +3,4 @@ uvicorn
 python-multipart
 sentence-transformers
 faiss-cpu
+slowapi
