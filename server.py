@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 import os, json, faiss, numpy as np
+import httpx
 
 class SearchRequest(BaseModel):
     query: str
@@ -29,14 +30,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Log all registered routes at startup
 @app.on_event("startup")
 async def log_routes():
-    print("🔍 Registered routes:")
+    print("\U0001F50D Registered routes:")
     for route in app.routes:
         print(f"  {route.path} -> {route.name} ({','.join(route.methods)})")
 
-# Globals and directories
 _model = None
 DATA_DIR = "data"
 HIDDEN_DATA_DIR = os.path.join(DATA_DIR, ".data")
@@ -46,7 +45,6 @@ METADATA_FILE = os.path.join(DATA_DIR, "metadata.json")
 os.makedirs(HIDDEN_DATA_DIR, exist_ok=True)
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# Load or cache model
 def get_model():
     global _model
     if _model is None:
@@ -54,21 +52,20 @@ def get_model():
         _model = SentenceTransformer("all-MiniLM-L6-v2")
     return _model
 
-# Basic auth
 def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
     if credentials.username != "admin" or credentials.password != "secret":
         raise HTTPException(status_code=401, detail="Unauthorized. Use Basic Auth: -u admin:secret")
     return True
 
-# Healthcheck endpoints
 @app.get("/")
 def root(): return JSONResponse(content={"status": "running"})
+
 @app.get("/ping")
 def ping(): return {"ping": "pong"}
+
 @app.get("/docs")
 def docs_redirect(): return {"docs": "/docs is disabled. This app runs without automatic docs."}
 
-# Semantic search handler
 def _search_semantic(request: SearchRequest):
     if not os.path.exists(INDEX_FILE) or not os.path.exists(METADATA_FILE):
         raise HTTPException(status_code=400, detail="Index not found")
@@ -83,16 +80,46 @@ def _search_semantic(request: SearchRequest):
     D, I = index.search(embedding, request.top_k)
     return [metadata[i] for i in I[0] if i < len(metadata)]
 
-@app.post("/")
-@app.post("/search")
+async def summarize_with_gpt(prompt: str) -> str | None:
+    try:
+        async with httpx.AsyncClient(timeout=8.0) as client:
+            response = await client.post(
+                "https://api.openai.com/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {os.getenv('OPENAI_API_KEY')}",
+                    "Content-Type": "application/json",
+                },
+                json={
+                    "model": "gpt-4",
+                    "messages": [
+                        {"role": "system", "content": "Summarize the following semantic search results in 1 paragraph."},
+                        {"role": "user", "content": prompt}
+                    ],
+                },
+            )
+            result = response.json()
+            return result["choices"][0]["message"]["content"].strip()
+    except Exception as e:
+        print(f"⚠️ GPT summarization failed: {e}")
+        return None
+
 @app.post("/semantic")
-def semantic_entrypoint(request: SearchRequest, auth: bool = Depends(authenticate)):
+async def semantic_entrypoint(request: SearchRequest, auth: bool = Depends(authenticate)):
+    results = _search_semantic(request)
+    gpt_summary = None
+    if request.mode == "Next RAP":
+        gpt_summary = await summarize_with_gpt(request.query)
+
+    return {"results": results, "gpt_summary": gpt_summary}
+
+@app.post("/search")
+def legacy_search(request: SearchRequest, auth: bool = Depends(authenticate)):
     results = _search_semantic(request)
     return {"results": results}
 
-# Reindexing
 @app.post("/reindex")
 def reindex(auth: bool = Depends(authenticate)):
+    print("🔍 DEBUG: Looking for parsed_blocks.json at:", os.path.abspath(PARSED_BLOCKS))
     if not os.path.exists(PARSED_BLOCKS):
         raise HTTPException(status_code=400, detail="parsed_blocks.json not found")
 
@@ -138,5 +165,4 @@ def reindex(auth: bool = Depends(authenticate)):
 
     return {"status": "success", "indexed": len(texts)}
 
-# Fix Pydantic v2
 SearchRequest.model_rebuild()
