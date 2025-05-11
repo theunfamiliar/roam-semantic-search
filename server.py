@@ -6,6 +6,8 @@ from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 import os, json, faiss, numpy as np
 import httpx
+import smtplib
+from email.mime.text import MIMEText
 
 class SearchRequest(BaseModel):
     query: str
@@ -48,6 +50,20 @@ os.makedirs(DATA_DIR, exist_ok=True)
 USERNAME = os.getenv("USERNAME", "admin")
 PASSWORD = os.getenv("PASSWORD", "secret")
 
+def send_email_alert(subject: str, body: str):
+    msg = MIMEText(body)
+    msg["Subject"] = subject
+    msg["From"] = os.getenv("MAIL_FROM")
+    msg["To"] = os.getenv("MAIL_TO")
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(os.getenv("MAIL_FROM"), os.getenv("MAIL_PASS"))
+            server.send_message(msg)
+    except Exception as e:
+        print(f"❌ Email send failed: {e}")
+
 def get_model():
     global _model
     if _model is None:
@@ -83,7 +99,6 @@ def _search_semantic(request: SearchRequest):
     D, I = index.search(embedding, request.top_k)
     results = [metadata[i] for i in I[0] if i < len(metadata)]
 
-    # Pagination
     start = (request.page - 1) * request.per_page
     end = start + request.per_page
     return results[start:end]
@@ -128,49 +143,56 @@ def legacy_search(request: SearchRequest, auth: bool = Depends(authenticate)):
 @app.post("/reindex")
 def reindex(auth: bool = Depends(authenticate)):
     print("🔍 DEBUG: Looking for parsed_blocks.json at:", os.path.abspath(PARSED_BLOCKS))
-    if not os.path.exists(PARSED_BLOCKS):
-        raise HTTPException(status_code=400, detail="parsed_blocks.json not found")
+    try:
+        if not os.path.exists(PARSED_BLOCKS):
+            raise Exception("parsed_blocks.json not found")
 
-    with open(PARSED_BLOCKS, "r", encoding="utf-8") as f:
-        blocks = json.load(f)
+        with open(PARSED_BLOCKS, "r", encoding="utf-8") as f:
+            blocks = json.load(f)
 
-    valid_blocks = [b for b in blocks if b.get("string") and b.get("uid")]
-    if not valid_blocks:
-        raise HTTPException(status_code=400, detail="No valid blocks to index")
+        valid_blocks = [b for b in blocks if b.get("string") and b.get("uid")]
+        if not valid_blocks:
+            raise Exception("No valid blocks to index")
 
-    texts = [b["string"].strip() for b in valid_blocks]
-    refs = [f'(({b["uid"]}))' for b in valid_blocks]
+        texts = [b["string"].strip() for b in valid_blocks]
+        refs = [f'(({b["uid"]}))' for b in valid_blocks]
 
-    model = get_model()
-    embeddings = model.encode(texts, batch_size=64, convert_to_numpy=True, show_progress_bar=True)
-    dim = embeddings.shape[1]
-    index = faiss.IndexFlatL2(dim)
-    index.add(embeddings)
+        model = get_model()
+        embeddings = model.encode(texts, batch_size=64, convert_to_numpy=True, show_progress_bar=True)
+        dim = embeddings.shape[1]
+        index = faiss.IndexFlatL2(dim)
+        index.add(embeddings)
 
-    uid_to_index = {b["uid"]: i for i, b in enumerate(valid_blocks)}
-    parent_map = {}
-    for i, b in enumerate(valid_blocks):
-        parent = b.get("parent_uid")
-        if parent and parent in uid_to_index:
-            parent_map.setdefault(parent, []).append(i)
+        uid_to_index = {b["uid"]: i for i, b in enumerate(valid_blocks)}
+        parent_map = {}
+        for i, b in enumerate(valid_blocks):
+            parent = b.get("parent_uid")
+            if parent and parent in uid_to_index:
+                parent_map.setdefault(parent, []).append(i)
 
-    metadata = []
-    for i, b in enumerate(valid_blocks):
-        uid = b["uid"]
-        metadata.append({
-            "text": texts[i],
-            "ref": refs[i],
-            "uid": uid,
-            "parent_uid": b.get("parent_uid"),
-            "children": [valid_blocks[j]["uid"] for j in parent_map.get(uid, [])],
-            "is_rap": "#raps" in texts[i].lower() or "[[raps]]" in texts[i].lower(),
-            "near_idea": False
-        })
+        metadata = []
+        for i, b in enumerate(valid_blocks):
+            uid = b["uid"]
+            metadata.append({
+                "text": texts[i],
+                "ref": refs[i],
+                "uid": uid,
+                "parent_uid": b.get("parent_uid"),
+                "children": [valid_blocks[j]["uid"] for j in parent_map.get(uid, [])],
+                "is_rap": "#raps" in texts[i].lower() or "[[raps]]" in texts[i].lower(),
+                "near_idea": False
+            })
 
-    faiss.write_index(index, INDEX_FILE)
-    with open(METADATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(metadata, f)
+        faiss.write_index(index, INDEX_FILE)
+        with open(METADATA_FILE, "w", encoding="utf-8") as f:
+            json.dump(metadata, f)
 
-    return {"status": "success", "indexed": len(texts)}
+        print("✅ Reindex complete.")
+        return {"status": "success", "indexed": len(texts)}
+
+    except Exception as e:
+        print(f"❌ Reindex failed: {e}")
+        send_email_alert("🚨 Reindex Failed", str(e))
+        raise HTTPException(status_code=500, detail=str(e))
 
 SearchRequest.model_rebuild()
