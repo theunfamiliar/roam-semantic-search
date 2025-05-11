@@ -10,10 +10,11 @@ import httpx
 class SearchRequest(BaseModel):
     query: str
     top_k: int = 5
+    page: int = 1
+    per_page: int = 5
     mode: str = "Next RAP"
     rhyme_sound: str | None = None
 
-# App setup
 app = FastAPI(
     title="Roam Semantic Search API",
     description="Query your Roam graph semantically using sentence-transformer embeddings + FAISS",
@@ -21,7 +22,6 @@ app = FastAPI(
 )
 security = HTTPBasic()
 
-# CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -32,7 +32,7 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def log_routes():
-    print("\U0001F50D Registered routes:")
+    print("🔍 Registered routes:")
     for route in app.routes:
         print(f"  {route.path} -> {route.name} ({','.join(route.methods)})")
 
@@ -45,7 +45,6 @@ METADATA_FILE = os.path.join(DATA_DIR, "metadata.json")
 os.makedirs(HIDDEN_DATA_DIR, exist_ok=True)
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# Use environment variables for auth
 USERNAME = os.getenv("USERNAME", "admin")
 PASSWORD = os.getenv("PASSWORD", "secret")
 
@@ -82,7 +81,12 @@ def _search_semantic(request: SearchRequest):
         metadata = json.load(f)
 
     D, I = index.search(embedding, request.top_k)
-    return [metadata[i] for i in I[0] if i < len(metadata)]
+    results = [metadata[i] for i in I[0] if i < len(metadata)]
+
+    # Pagination
+    start = (request.page - 1) * request.per_page
+    end = start + request.per_page
+    return results[start:end]
 
 async def summarize_with_gpt(prompt: str) -> str | None:
     try:
