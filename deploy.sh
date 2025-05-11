@@ -45,6 +45,9 @@ ssh singularity << 'ENDSSH'
     echo "❌ server.py not found"; exit 1
   fi
 
+  echo "🛑 Releasing port 8000 if blocked..."
+  fuser -k 8000/tcp || true
+
   echo "🔄 Restarting API service..."
   systemctl restart semantic-api.service
 
