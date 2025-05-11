@@ -47,6 +47,7 @@ ssh singularity << 'ENDSSH'
 
   echo "🛑 Releasing port 8000 if blocked..."
   fuser -k 8000/tcp || true
+  sleep 2  # critical fix: wait for OS to release port
 
   echo "🔄 Restarting API service..."
   systemctl restart semantic-api.service
