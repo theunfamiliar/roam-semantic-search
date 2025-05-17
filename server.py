@@ -10,7 +10,7 @@ import smtplib
 from email.mime.text import MIMEText
 import logging
 
-# ─── Set Up Logging ──────────────────────────────────────────────────────
+# ─── Set Up Logging ───
 os.makedirs("logs", exist_ok=True)
 logging.basicConfig(
     filename="logs/reindex.log",
@@ -60,7 +60,6 @@ os.makedirs(DATA_DIR, exist_ok=True)
 USERNAME = os.getenv("USERNAME", "admin")
 PASSWORD = os.getenv("PASSWORD", "secret")
 
-
 def send_email_alert(subject: str, body: str):
     msg = MIMEText(body)
     msg["Subject"] = subject
@@ -75,7 +74,6 @@ def send_email_alert(subject: str, body: str):
     except Exception as e:
         print(f"❌ Email send failed: {e}")
 
-
 def get_model():
     global _model
     if _model is None:
@@ -83,12 +81,10 @@ def get_model():
         _model = SentenceTransformer("all-MiniLM-L6-v2")
     return _model
 
-
 def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
     if credentials.username != USERNAME or credentials.password != PASSWORD:
         raise HTTPException(status_code=401, detail="Unauthorized. Use correct Basic Auth.")
     return True
-
 
 @app.get("/")
 def root(): return JSONResponse(content={"status": "running"})
@@ -98,7 +94,6 @@ def ping(): return {"ping": "pong"}
 
 @app.get("/docs")
 def docs_redirect(): return {"docs": "/docs is disabled. This app runs without automatic docs."}
-
 
 def _search_semantic(request: SearchRequest):
     if not os.path.exists(INDEX_FILE) or not os.path.exists(METADATA_FILE):
@@ -111,7 +106,7 @@ def _search_semantic(request: SearchRequest):
     with open(METADATA_FILE, "r", encoding="utf-8") as f:
         metadata = json.load(f)
 
-    D, I = index.search(embedding, request.top_k * 5)  # Over-fetch to allow deduplication
+    D, I = index.search(embedding, request.top_k * 5)
     seen = set()
     deduped = []
 
@@ -131,10 +126,9 @@ def _search_semantic(request: SearchRequest):
     end = start + request.per_page
     return deduped[start:end]
 
-
 async def summarize_with_gpt(prompt: str) -> str | None:
     try:
-        async with httpx.AsyncClient(timeout=8.0) as client:
+        async with httpx.AsyncClient(timeout=12.0) as client:
             response = await client.post(
                 "https://api.openai.com/v1/chat/completions",
                 headers={
@@ -144,8 +138,19 @@ async def summarize_with_gpt(prompt: str) -> str | None:
                 json={
                     "model": "gpt-4",
                     "messages": [
-                        {"role": "system", "content": "Summarize the following semantic search results in 1 paragraph."},
-                        {"role": "user", "content": prompt}
+                        {
+                            "role": "system",
+                            "content": (
+                                "You are the user's internal voice, trained on their Roam graph. "
+                                "Answer from their perspective. Reflect their style and mindset. "
+                                "Be specific, grounded, personal, and creative. "
+                                "Do not define things. Speak in first-person if appropriate."
+                            ),
+                        },
+                        {
+                            "role": "user",
+                            "content": prompt,
+                        },
                     ],
                 },
             )
@@ -154,7 +159,6 @@ async def summarize_with_gpt(prompt: str) -> str | None:
     except Exception as e:
         print(f"⚠️ GPT summarization failed: {e}")
         return None
-
 
 @app.post("/semantic")
 async def semantic_entrypoint(request: SearchRequest, auth: bool = Depends(authenticate)):
