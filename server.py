@@ -99,6 +99,7 @@ def ping(): return {"ping": "pong"}
 @app.get("/docs")
 def docs_redirect(): return {"docs": "/docs is disabled. This app runs without automatic docs."}
 
+
 def _search_semantic(request: SearchRequest):
     if not os.path.exists(INDEX_FILE) or not os.path.exists(METADATA_FILE):
         raise HTTPException(status_code=400, detail="Index not found")
@@ -110,12 +111,26 @@ def _search_semantic(request: SearchRequest):
     with open(METADATA_FILE, "r", encoding="utf-8") as f:
         metadata = json.load(f)
 
-    D, I = index.search(embedding, request.top_k)
-    results = [metadata[i] for i in I[0] if i < len(metadata)]
+    D, I = index.search(embedding, request.top_k * 5)  # Over-fetch to allow deduplication
+    seen = set()
+    deduped = []
+
+    for i in I[0]:
+        if i >= len(metadata):
+            continue
+        block = metadata[i]
+        text = block["text"].strip().lower()
+        if text in seen:
+            continue
+        seen.add(text)
+        deduped.append(block)
+        if len(deduped) >= request.top_k:
+            break
 
     start = (request.page - 1) * request.per_page
     end = start + request.per_page
-    return results[start:end]
+    return deduped[start:end]
+
 
 async def summarize_with_gpt(prompt: str) -> str | None:
     try:
@@ -139,6 +154,7 @@ async def summarize_with_gpt(prompt: str) -> str | None:
     except Exception as e:
         print(f"⚠️ GPT summarization failed: {e}")
         return None
+
 
 @app.post("/semantic")
 async def semantic_entrypoint(request: SearchRequest, auth: bool = Depends(authenticate)):
