@@ -46,8 +46,20 @@ ssh singularity << 'ENDSSH'
   fi
 
   echo "🛑 Releasing port 8000 if blocked..."
-  fuser -k 8000/tcp || true
-  sleep 2  # critical fix: wait for OS to release port
+  PID=$(lsof -ti tcp:8000)
+  if [ -n "$PID" ]; then
+    echo "🔪 Killing process on port 8000 (PID: $PID)"
+    kill -9 $PID || echo "⚠️ Failed to kill process $PID"
+    sleep 2
+    echo "🔄 Verifying port 8000 is free..."
+    if lsof -i :8000; then
+      echo "❌ Port 8000 still in use!"; exit 1
+    else
+      echo "✅ Port 8000 successfully cleared"
+    fi
+  else
+    echo "✅ No process found on port 8000"
+  fi
 
   echo "🔄 Restarting API service..."
   systemctl restart semantic-api.service
