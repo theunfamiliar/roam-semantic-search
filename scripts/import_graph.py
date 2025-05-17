@@ -13,6 +13,24 @@ def send_email(subject, message):
         "mail", "-s", subject, EMAIL
     ], input=message.encode(), check=False)
 
+def parse_blocks(blocks):
+    result = []
+
+    def traverse(block, parent_uid=None):
+        if "string" in block and block["string"].strip():
+            result.append({
+                "uid": block.get("uid", str(uuid4())[:8]),
+                "string": block["string"].strip(),
+                "parent_uid": parent_uid
+            })
+        for child in block.get("children", []):
+            traverse(child, block.get("uid"))
+
+    for block in blocks:
+        traverse(block)
+
+    return result
+
 def main():
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"\n📦 Starting graph import at {now}")
@@ -26,14 +44,7 @@ def main():
         raw = json.load(f)
 
     print(f"📦 Loaded {len(raw)} raw blocks")
-    converted = []
-    for entry in raw:
-        if "string" in entry and entry["string"].strip():
-            converted.append({
-                "uid": str(uuid4())[:8],
-                "string": entry["string"].strip(),
-                "parent_uid": entry.get("parent_uid")
-            })
+    converted = parse_blocks(raw)
 
     if not converted:
         print("❌ No valid blocks found")
