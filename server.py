@@ -65,7 +65,6 @@ def send_email_alert(subject: str, body: str):
     msg["Subject"] = subject
     msg["From"] = os.getenv("MAIL_FROM")
     msg["To"] = os.getenv("MAIL_TO")
-
     try:
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
             server.starttls()
@@ -98,18 +97,14 @@ def docs_redirect(): return {"docs": "/docs is disabled. This app runs without a
 def _search_semantic(request: SearchRequest):
     if not os.path.exists(INDEX_FILE) or not os.path.exists(METADATA_FILE):
         raise HTTPException(status_code=400, detail="Index not found")
-
     model = get_model()
     embedding = model.encode([request.query], convert_to_numpy=True)
     index = faiss.read_index(INDEX_FILE)
-
     with open(METADATA_FILE, "r", encoding="utf-8") as f:
         metadata = json.load(f)
-
     D, I = index.search(embedding, request.top_k * 5)
     seen = set()
     deduped = []
-
     for i in I[0]:
         if i >= len(metadata):
             continue
@@ -121,7 +116,6 @@ def _search_semantic(request: SearchRequest):
         deduped.append(block)
         if len(deduped) >= request.top_k:
             break
-
     start = (request.page - 1) * request.per_page
     end = start + request.per_page
     return deduped[start:end]
@@ -147,10 +141,7 @@ async def summarize_with_gpt(prompt: str) -> str | None:
                                 "Do not define things. Speak in first-person if appropriate."
                             ),
                         },
-                        {
-                            "role": "user",
-                            "content": prompt,
-                        },
+                        {"role": "user", "content": prompt},
                     ],
                 },
             )
@@ -166,7 +157,6 @@ async def semantic_entrypoint(request: SearchRequest, auth: bool = Depends(authe
     gpt_summary = None
     if request.mode == "Next RAP":
         gpt_summary = await summarize_with_gpt(request.query)
-
     return {"results": results, "gpt_summary": gpt_summary}
 
 @app.post("/search")
@@ -180,30 +170,24 @@ def reindex(auth: bool = Depends(authenticate)):
     try:
         if not os.path.exists(PARSED_BLOCKS):
             raise Exception("parsed_blocks.json not found")
-
         with open(PARSED_BLOCKS, "r", encoding="utf-8") as f:
             blocks = json.load(f)
-
         valid_blocks = [b for b in blocks if b.get("string") and b.get("uid")]
         if not valid_blocks:
             raise Exception("No valid blocks to index")
-
         texts = [b["string"].strip() for b in valid_blocks]
         refs = [f'(({b["uid"]}))' for b in valid_blocks]
-
         model = get_model()
         embeddings = model.encode(texts, batch_size=64, convert_to_numpy=True, show_progress_bar=True)
         dim = embeddings.shape[1]
         index = faiss.IndexFlatL2(dim)
         index.add(embeddings)
-
         uid_to_index = {b["uid"]: i for i, b in enumerate(valid_blocks)}
         parent_map = {}
         for i, b in enumerate(valid_blocks):
             parent = b.get("parent_uid")
             if parent and parent in uid_to_index:
                 parent_map.setdefault(parent, []).append(i)
-
         metadata = []
         for i, b in enumerate(valid_blocks):
             uid = b["uid"]
@@ -217,14 +201,11 @@ def reindex(auth: bool = Depends(authenticate)):
                 "is_ripe": "[[ripe]]" in texts[i].lower(),
                 "near_idea": False
             })
-
         faiss.write_index(index, INDEX_FILE)
         with open(METADATA_FILE, "w", encoding="utf-8") as f:
             json.dump(metadata, f)
-
         logging.info("✅ Reindex complete. Blocks indexed: %d", len(texts))
         return {"status": "success", "indexed": len(texts)}
-
     except Exception as e:
         logging.exception("❌ Reindex failed")
         send_email_alert("🚨 Reindex Failed", str(e))
