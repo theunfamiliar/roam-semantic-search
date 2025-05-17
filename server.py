@@ -10,7 +10,7 @@ import smtplib
 from email.mime.text import MIMEText
 import logging
 
-# ─── Set Up Logging ─────────────────────────────────────────────────────────────
+# ─── Set Up Logging ──────────────────────────────────────────────────────
 os.makedirs("logs", exist_ok=True)
 logging.basicConfig(
     filename="logs/reindex.log",
@@ -194,6 +194,7 @@ def reindex(auth: bool = Depends(authenticate)):
                 "parent_uid": b.get("parent_uid"),
                 "children": [valid_blocks[j]["uid"] for j in parent_map.get(uid, [])],
                 "is_rap": "#raps" in texts[i].lower() or "[[raps]]" in texts[i].lower(),
+                "is_ripe": "[[ripe]]" in texts[i].lower(),
                 "near_idea": False
             })
 
