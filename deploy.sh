@@ -45,24 +45,22 @@ ssh -tt singularity << 'ENDSSH'
     echo "❌ server.py not found"; exit 1
   fi
 
-  echo "🛑 Releasing port 8000 if blocked..."
-  PID=$(lsof -ti:8000 || true)
-  if [ -n "$PID" ]; then
-    echo "🔪 Killing process on port 8000 (PID: $PID)"
-    kill -9 $PID || echo "⚠️ Failed to kill process $PID"
-    sleep 2
-    echo "🔄 Verifying port 8000 is free..."
-    if lsof -i :8000; then
-      echo "❌ Port 8000 still in use!"; exit 1
-    else
-      echo "✅ Port 8000 successfully cleared"
-    fi
+  echo "🛑 Stopping systemd service (semantic-api.service)..."
+  systemctl stop semantic-api.service
+
+  echo "🔪 Killing any lingering uvicorn processes..."
+  pkill -f uvicorn || true
+  sleep 2
+
+  echo "🔄 Verifying port 8000 is free..."
+  if lsof -i :8000; then
+    echo "❌ Port 8000 still in use!"; exit 1
   else
-    echo "✅ No process found on port 8000"
+    echo "✅ Port 8000 successfully cleared"
   fi
 
   echo "🔄 Restarting API service..."
-  systemctl restart semantic-api.service
+  systemctl start semantic-api.service
 
   echo "🪵 Dumping last 30 log lines from semantic-api.service..."
   journalctl -u semantic-api.service -n 30 --no-pager
