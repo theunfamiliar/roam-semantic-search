@@ -27,7 +27,7 @@ git push --force origin main
 # 📡 SSH into VPS and deploy
 # ─────────────────────────────────────────────────────────────
 echo "🚀 SSHing into VPS and pulling latest code..."
-ssh singularity << 'ENDSSH'
+ssh -tt singularity << 'ENDSSH'
   set -e
 
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -46,7 +46,7 @@ ssh singularity << 'ENDSSH'
   fi
 
   echo "🛑 Releasing port 8000 if blocked..."
-  PID=$(lsof -ti tcp:8000)
+  PID=$(lsof -ti:8000 || true)
   if [ -n "$PID" ]; then
     echo "🔪 Killing process on port 8000 (PID: $PID)"
     kill -9 $PID || echo "⚠️ Failed to kill process $PID"
@@ -71,7 +71,7 @@ ssh singularity << 'ENDSSH'
   sleep 3
 
   echo "📡 Hitting root route..."
-  ROOT_OUTPUT=$(curl -s -w "\\nHTTP_STATUS:%{http_code}" http://localhost:8001/)
+  ROOT_OUTPUT=$(curl -s -w "\nHTTP_STATUS:%{http_code}" http://localhost:8000/)
   ROOT_STATUS=$(echo "$ROOT_OUTPUT" | tail -n1 | sed 's/HTTP_STATUS://')
   ROOT_BODY=$(echo "$ROOT_OUTPUT" | sed '$d')
   echo "🌐 Status: $ROOT_STATUS"
@@ -81,8 +81,8 @@ ssh singularity << 'ENDSSH'
   fi
 
   echo "📡 Hitting /search route..."
-  SEARCH_OUTPUT=$(curl -s -w "\\nHTTP_STATUS:%{http_code}" -u admin:secret -H "Content-Type: application/json" \
-    -d '{"query":"test","top_k":1}' http://localhost:8001/search)
+  SEARCH_OUTPUT=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -u admin:secret -H "Content-Type: application/json" \
+    -d '{"query":"test","top_k":1}' http://localhost:8000/search)
   SEARCH_STATUS=$(echo "$SEARCH_OUTPUT" | tail -n1 | sed 's/HTTP_STATUS://')
   SEARCH_BODY=$(echo "$SEARCH_OUTPUT" | sed '$d')
   echo "🌐 Status: $SEARCH_STATUS"
@@ -92,7 +92,7 @@ ssh singularity << 'ENDSSH'
     echo "⚠️ Search route failed, attempting reindex..."
 
     echo "🔁 Reindexing..."
-    REINDEX_OUTPUT=$(curl -s -w "\\nHTTP_STATUS:%{http_code}" -u admin:secret -X POST http://localhost:8001/reindex)
+    REINDEX_OUTPUT=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -u admin:secret -X POST http://localhost:8000/reindex)
     REINDEX_STATUS=$(echo "$REINDEX_OUTPUT" | tail -n1 | sed 's/HTTP_STATUS://')
     REINDEX_BODY=$(echo "$REINDEX_OUTPUT" | sed '$d')
     echo "🌐 Status: $REINDEX_STATUS"
