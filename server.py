@@ -8,6 +8,16 @@ import os, json, faiss, numpy as np
 import httpx
 import smtplib
 from email.mime.text import MIMEText
+import logging
+
+# ─── Set Up Logging ─────────────────────────────────────────────────────────────
+os.makedirs("logs", exist_ok=True)
+logging.basicConfig(
+    filename="logs/reindex.log",
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s: %(message)s",
+    force=True
+)
 
 class SearchRequest(BaseModel):
     query: str
@@ -50,6 +60,7 @@ os.makedirs(DATA_DIR, exist_ok=True)
 USERNAME = os.getenv("USERNAME", "admin")
 PASSWORD = os.getenv("PASSWORD", "secret")
 
+
 def send_email_alert(subject: str, body: str):
     msg = MIMEText(body)
     msg["Subject"] = subject
@@ -64,6 +75,7 @@ def send_email_alert(subject: str, body: str):
     except Exception as e:
         print(f"❌ Email send failed: {e}")
 
+
 def get_model():
     global _model
     if _model is None:
@@ -71,10 +83,12 @@ def get_model():
         _model = SentenceTransformer("all-MiniLM-L6-v2")
     return _model
 
+
 def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
     if credentials.username != USERNAME or credentials.password != PASSWORD:
         raise HTTPException(status_code=401, detail="Unauthorized. Use correct Basic Auth.")
     return True
+
 
 @app.get("/")
 def root(): return JSONResponse(content={"status": "running"})
@@ -142,7 +156,7 @@ def legacy_search(request: SearchRequest, auth: bool = Depends(authenticate)):
 
 @app.post("/reindex")
 def reindex(auth: bool = Depends(authenticate)):
-    print("🔍 DEBUG: Looking for parsed_blocks.json at:", os.path.abspath(PARSED_BLOCKS))
+    logging.info("Reindex triggered via /reindex endpoint")
     try:
         if not os.path.exists(PARSED_BLOCKS):
             raise Exception("parsed_blocks.json not found")
@@ -187,11 +201,11 @@ def reindex(auth: bool = Depends(authenticate)):
         with open(METADATA_FILE, "w", encoding="utf-8") as f:
             json.dump(metadata, f)
 
-        print("✅ Reindex complete.")
+        logging.info("✅ Reindex complete. Blocks indexed: %d", len(texts))
         return {"status": "success", "indexed": len(texts)}
 
     except Exception as e:
-        print(f"❌ Reindex failed: {e}")
+        logging.exception("❌ Reindex failed")
         send_email_alert("🚨 Reindex Failed", str(e))
         raise HTTPException(status_code=500, detail=str(e))
 
