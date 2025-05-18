@@ -6,6 +6,9 @@ LOG="logs/cron.log"
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 echo "📥 [$TIMESTAMP] Starting graph ingest..." >> "$LOG"
 
+# Step 0: Safety fix – ensure scripts are executable
+chmod +x ./scripts/*.sh
+
 # Step 1: Import Graph
 if python3 scripts/import_graph.py >> "$LOG" 2>&1; then
   echo "✅ [$TIMESTAMP] Graph import successful." >> "$LOG"
