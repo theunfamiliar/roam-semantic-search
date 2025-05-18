@@ -34,9 +34,10 @@ app = FastAPI(
 )
 security = HTTPBasic()
 
+# ─── CORS Middleware Update ───
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://roamresearch.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
