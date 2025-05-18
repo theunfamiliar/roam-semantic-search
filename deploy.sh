@@ -36,6 +36,9 @@ ssh -tt singularity << 'ENDSSH'
 
   cd /root/roam-semantic-search
 
+  echo "🔐 Ensuring all scripts are executable..."
+  chmod +x ./scripts/*.sh
+
   echo "📦 Forcing latest from GitHub (reset)..."
   git fetch origin
   git reset --hard origin/main
