@@ -9,6 +9,7 @@ import httpx
 import smtplib
 from email.mime.text import MIMEText
 import logging
+import re
 
 # ─── Set Up Logging ───
 os.makedirs("logs", exist_ok=True)
@@ -136,10 +137,13 @@ async def summarize_with_gpt(prompt: str) -> str | None:
                         {
                             "role": "system",
                             "content": (
-                                "You are the user's internal voice, trained on their Roam graph. "
-                                "Answer from their perspective. Reflect their style and mindset. "
-                                "Be specific, grounded, personal, and creative. "
-                                "Do not define things. Speak in first-person if appropriate."
+                                "You are analyzing excerpts from the user's Roam Research graph. "
+                                "Your job is to explain what the user believes about a topic, "
+                                "based solely on the content provided. "
+                                "Use direct references or paraphrases from the blocks. "
+                                "Do not generalize, assume, or insert common ideas. "
+                                "Speak clearly and precisely about what the user has actually written. "
+                                "If the provided blocks are conflicting or vague, you may say so — do not make up coherence."
                             ),
                         },
                         {"role": "user", "content": prompt},
@@ -176,7 +180,23 @@ def reindex(auth: bool = Depends(authenticate)):
         valid_blocks = [b for b in blocks if b.get("string") and b.get("uid")]
         if not valid_blocks:
             raise Exception("No valid blocks to index")
-        texts = [b["string"].strip() for b in valid_blocks]
+
+        uid_to_block = {b["uid"]: b for b in valid_blocks}
+
+        def extract_tags(text):
+            tags = re.findall(r"#\w+|\[\[.*?\]\]", text)
+            return "Tags: " + " ".join(tags) if tags else ""
+
+        def get_chunk(b):
+            parent_text = ""
+            if b.get("parent_uid") and b["parent_uid"] in uid_to_block:
+                parent_text = uid_to_block[b["parent_uid"]]["string"]
+            children = [child["string"] for child in valid_blocks if child.get("parent_uid") == b["uid"]]
+            tag_line = extract_tags(b["string"])
+            joined = " ".join([tag_line, parent_text, b["string"]] + children)
+            return joined.strip()
+
+        texts = [get_chunk(b) for b in valid_blocks]
         refs = [f'(({b["uid"]}))' for b in valid_blocks]
         model = get_model()
         embeddings = model.encode(texts, batch_size=64, convert_to_numpy=True, show_progress_bar=True)
