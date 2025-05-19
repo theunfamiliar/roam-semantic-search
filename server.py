@@ -190,10 +190,11 @@ def reindex(auth: bool = Depends(authenticate)):
         def get_chunk(b):
             parent_text = ""
             if b.get("parent_uid") and b["parent_uid"] in uid_to_block:
-                parent_text = uid_to_block[b["parent_uid"]]["string"]
+                parent_text = uid_to_block[b["parent_uid"]].get("string", "")
             children = [child["string"] for child in valid_blocks if child.get("parent_uid") == b["uid"]]
+            page_title = b.get("page", {}).get("title", "")
             tag_line = extract_tags(b["string"])
-            joined = " ".join([tag_line, parent_text, b["string"]] + children)
+            joined = " ".join([f"Page: {page_title}", tag_line, parent_text, b["string"]] + children)
             return joined.strip()
 
         texts = [get_chunk(b) for b in valid_blocks]
