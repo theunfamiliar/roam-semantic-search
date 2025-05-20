@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
+from dotenv import load_dotenv; load_dotenv()  # ✅ ← required to load your .env values
 import os, json, faiss, numpy as np
 import httpx
 import smtplib
