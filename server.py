@@ -27,7 +27,7 @@ class SearchRequest(BaseModel):
     per_page: int = 5
     mode: str = "Next RAP"
     rhyme_sound: str | None = None
-    brain: str = "creative"
+    brain: str = "ideas"
 
 app = FastAPI(title="Roam Semantic Search API", version="1.0.0")
 security = HTTPBasic()
@@ -81,7 +81,7 @@ def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
     return True
 
 def get_filenames(brain: str):
-    if brain not in ("creative", "biz"):
+    if brain not in ("ideas", "daylist"):
         raise HTTPException(status_code=400, detail="Invalid brain")
     return {
         "index": os.path.join(DATA_DIR, f"index_{brain}.faiss"),
@@ -170,12 +170,12 @@ async def reindex(auth: bool = Depends(authenticate)):
             block_res.raise_for_status()
             raw_blocks = block_res.json()["result"]
 
-        toc_map = {"creative": set(), "biz": set()}
+        toc_map = {"ideas": set(), "daylist": set()}
         for section, page in toc_result:
             if section.lower() == "ideas":
-                toc_map["creative"].add(page)
-            elif section.lower() == "marketing":
-                toc_map["biz"].add(page)
+                toc_map["ideas"].add(page)
+            elif section.lower() == "daylist":
+                toc_map["daylist"].add(page)
 
         blocks = [
             {"uid": uid, "string": string, "parent_uid": parent_uid, "page_title": page_title}
@@ -183,7 +183,7 @@ async def reindex(auth: bool = Depends(authenticate)):
             if string and uid
         ]
 
-        for brain in ["creative", "biz"]:
+        for brain in ["ideas", "daylist"]:
             selected = [b for b in blocks if b["page_title"] in toc_map[brain]]
             print(f"🧠 {brain} → {len(selected)} blocks")
 
