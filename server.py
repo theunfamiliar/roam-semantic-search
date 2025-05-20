@@ -27,15 +27,11 @@ class SearchRequest(BaseModel):
     per_page: int = 5
     mode: str = "Next RAP"
     rhyme_sound: str | None = None
+    brain: str = "creative"
 
-app = FastAPI(
-    title="Roam Semantic Search API",
-    description="Query your Roam graph semantically using sentence-transformer embeddings + FAISS",
-    version="1.0.0"
-)
+app = FastAPI(title="Roam Semantic Search API", version="1.0.0")
 security = HTTPBasic()
 
-# ─── CORS Middleware Update ───
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://roamresearch.com"],
@@ -52,15 +48,12 @@ async def log_routes():
 
 _model = None
 DATA_DIR = "data"
-HIDDEN_DATA_DIR = os.path.join(DATA_DIR, ".data")
-PARSED_BLOCKS = os.path.join(HIDDEN_DATA_DIR, "parsed_blocks.json")
-INDEX_FILE = os.path.join(DATA_DIR, "index.faiss")
-METADATA_FILE = os.path.join(DATA_DIR, "metadata.json")
-os.makedirs(HIDDEN_DATA_DIR, exist_ok=True)
 os.makedirs(DATA_DIR, exist_ok=True)
 
 USERNAME = os.getenv("USERNAME", "admin")
 PASSWORD = os.getenv("PASSWORD", "secret")
+ROAM_GRAPH = os.getenv("ROAM_GRAPH", "unfamiliar")
+ROAM_TOKEN = os.getenv("ROAM_TOKEN")
 
 def send_email_alert(subject: str, body: str):
     msg = MIMEText(body)
@@ -87,6 +80,14 @@ def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
         raise HTTPException(status_code=401, detail="Unauthorized. Use correct Basic Auth.")
     return True
 
+def get_filenames(brain: str):
+    if brain not in ("creative", "biz"):
+        raise HTTPException(status_code=400, detail="Invalid brain")
+    return {
+        "index": os.path.join(DATA_DIR, f"index_{brain}.faiss"),
+        "meta": os.path.join(DATA_DIR, f"metadata_{brain}.json")
+    }
+
 @app.get("/")
 def root(): return JSONResponse(content={"status": "running"})
 
@@ -96,138 +97,141 @@ def ping(): return {"ping": "pong"}
 @app.get("/docs")
 def docs_redirect(): return {"docs": "/docs is disabled. This app runs without automatic docs."}
 
-def _search_semantic(request: SearchRequest):
-    if not os.path.exists(INDEX_FILE) or not os.path.exists(METADATA_FILE):
-        raise HTTPException(status_code=400, detail="Index not found")
+@app.post("/semantic")
+async def semantic_entrypoint(request: SearchRequest, auth: bool = Depends(authenticate)):
+    files = get_filenames(request.brain)
+    index_file = files["index"]
+    meta_file = files["meta"]
+    if not os.path.exists(index_file) or not os.path.exists(meta_file):
+        raise HTTPException(status_code=400, detail=f"Index for '{request.brain}' not found")
     model = get_model()
     embedding = model.encode([request.query], convert_to_numpy=True)
-    index = faiss.read_index(INDEX_FILE)
-    with open(METADATA_FILE, "r", encoding="utf-8") as f:
+    index = faiss.read_index(index_file)
+    with open(meta_file, "r", encoding="utf-8") as f:
         metadata = json.load(f)
     D, I = index.search(embedding, request.top_k * 5)
-    seen = set()
-    deduped = []
+    seen, deduped = set(), []
     for i in I[0]:
-        if i >= len(metadata):
-            continue
+        if i >= len(metadata): continue
         block = metadata[i]
         text = block["text"].strip().lower()
-        if text in seen:
-            continue
+        if text in seen: continue
         seen.add(text)
         deduped.append(block)
         if len(deduped) >= request.top_k:
             break
-    start = (request.page - 1) * request.per_page
-    end = start + request.per_page
-    return deduped[start:end]
-
-async def summarize_with_gpt(prompt: str) -> str | None:
-    try:
-        async with httpx.AsyncClient(timeout=12.0) as client:
-            response = await client.post(
-                "https://api.openai.com/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {os.getenv('OPENAI_API_KEY')}",
-                    "Content-Type": "application/json",
-                },
-                json={
-                    "model": "gpt-4",
-                    "messages": [
-                        {
-                            "role": "system",
-                            "content": (
-                                "You are analyzing excerpts from the user's Roam Research graph. "
-                                "Your job is to explain what the user believes about a topic, "
-                                "based solely on the content provided. "
-                                "Use direct references or paraphrases from the blocks. "
-                                "Do not generalize, assume, or insert common ideas. "
-                                "Speak clearly and precisely about what the user has actually written. "
-                                "If the provided blocks are conflicting or vague, you may say so — do not make up coherence."
-                            ),
-                        },
-                        {"role": "user", "content": prompt},
-                    ],
-                },
-            )
-            result = response.json()
-            return result["choices"][0]["message"]["content"].strip()
-    except Exception as e:
-        print(f"⚠️ GPT summarization failed: {e}")
-        return None
-
-@app.post("/semantic")
-async def semantic_entrypoint(request: SearchRequest, auth: bool = Depends(authenticate)):
-    results = _search_semantic(request)
-    gpt_summary = None
-    if request.mode == "Next RAP":
-        gpt_summary = await summarize_with_gpt(request.query)
-    return {"results": results, "gpt_summary": gpt_summary}
+    start, end = (request.page - 1) * request.per_page, request.page * request.per_page
+    return {"results": deduped[start:end]}
 
 @app.post("/search")
 def legacy_search(request: SearchRequest, auth: bool = Depends(authenticate)):
-    results = _search_semantic(request)
-    return {"results": results}
+    return semantic_entrypoint(request, auth)
 
 @app.post("/reindex")
-def reindex(auth: bool = Depends(authenticate)):
-    logging.info("Reindex triggered via /reindex endpoint")
+async def reindex(auth: bool = Depends(authenticate)):
+    print("🔁 TOC-based dual-brain reindex via Roam API")
+    url = f"https://api.roamresearch.com/api/graph/{ROAM_GRAPH}/q"
+    headers = {
+        "Authorization": f"Bearer {ROAM_TOKEN}",
+        "Content-Type": "application/json"
+    }
+
+    toc_query = {
+        "query": """
+        [:find ?section ?childTitle
+         :where
+         [?toc :node/title "TOC"]
+         [?toc :block/children ?sec]
+         [?sec :block/string ?section]
+         [?sec :block/children ?child]
+         [?child :block/string ?childTitle]]
+        """
+    }
+
+    block_query = {
+        "query": """
+        [:find ?uid ?str ?parent ?page_title
+         :where
+         [?b :block/uid ?uid]
+         [?b :block/string ?str]
+         [?b :block/parents ?parent]
+         [?b :block/page ?p]
+         [?p :node/title ?page_title]]
+        """
+    }
+
     try:
-        if not os.path.exists(PARSED_BLOCKS):
-            raise Exception("parsed_blocks.json not found")
-        with open(PARSED_BLOCKS, "r", encoding="utf-8") as f:
-            blocks = json.load(f)
-        valid_blocks = [b for b in blocks if b.get("string") and b.get("uid")]
-        if not valid_blocks:
-            raise Exception("No valid blocks to index")
+        async with httpx.AsyncClient() as client:
+            toc_res = await client.post(url, headers=headers, json=toc_query, follow_redirects=True)
+            toc_res.raise_for_status()
+            toc_result = toc_res.json()["result"]
 
-        uid_to_block = {b["uid"]: b for b in valid_blocks}
+            block_res = await client.post(url, headers=headers, json=block_query, follow_redirects=True)
+            block_res.raise_for_status()
+            raw_blocks = block_res.json()["result"]
 
-        def extract_tags(text):
-            tags = re.findall(r"#\w+|\[\[.*?\]\]", text)
-            return "Tags: " + " ".join(tags) if tags else ""
+        toc_map = {"creative": set(), "biz": set()}
+        for section, page in toc_result:
+            if section.lower() == "ideas":
+                toc_map["creative"].add(page)
+            elif section.lower() == "marketing":
+                toc_map["biz"].add(page)
 
-        def get_chunk(b):
-            parent_text = ""
-            if b.get("parent_uid") and b["parent_uid"] in uid_to_block:
-                parent_text = uid_to_block[b["parent_uid"]].get("string", "")
-            children = [child["string"] for child in valid_blocks if child.get("parent_uid") == b["uid"]]
-            page_title = b.get("page", {}).get("title", "")
-            tag_line = extract_tags(b["string"])
-            joined = " ".join([f"Page: {page_title}", tag_line, parent_text, b["string"]] + children)
-            return joined.strip()
+        blocks = [
+            {"uid": uid, "string": string, "parent_uid": parent_uid, "page_title": page_title}
+            for uid, string, parent_uid, page_title in raw_blocks
+            if string and uid
+        ]
 
-        texts = [get_chunk(b) for b in valid_blocks]
-        refs = [f'(({b["uid"]}))' for b in valid_blocks]
-        model = get_model()
-        embeddings = model.encode(texts, batch_size=64, convert_to_numpy=True, show_progress_bar=True)
-        dim = embeddings.shape[1]
-        index = faiss.IndexFlatL2(dim)
-        index.add(embeddings)
-        uid_to_index = {b["uid"]: i for i, b in enumerate(valid_blocks)}
-        parent_map = {}
-        for i, b in enumerate(valid_blocks):
-            parent = b.get("parent_uid")
-            if parent and parent in uid_to_index:
-                parent_map.setdefault(parent, []).append(i)
-        metadata = []
-        for i, b in enumerate(valid_blocks):
-            uid = b["uid"]
-            metadata.append({
-                "text": texts[i],
-                "ref": refs[i],
-                "uid": uid,
-                "parent_uid": b.get("parent_uid"),
-                "children": [valid_blocks[j]["uid"] for j in parent_map.get(uid, [])],
-                "is_rap": "#raps" in texts[i].lower() or "[[raps]]" in texts[i].lower(),
-                "is_ripe": "[[ripe]]" in texts[i].lower(),
-                "near_idea": False
-            })
-        faiss.write_index(index, INDEX_FILE)
-        with open(METADATA_FILE, "w", encoding="utf-8") as f:
-            json.dump(metadata, f)
-        logging.info("✅ Reindex complete. Blocks indexed: %d", len(texts))
-        return {"status": "success", "indexed": len(texts)}
+        for brain in ["creative", "biz"]:
+            selected = [b for b in blocks if b["page_title"] in toc_map[brain]]
+            print(f"🧠 {brain} → {len(selected)} blocks")
+
+            if not selected:
+                continue
+
+            uid_map = {b["uid"]: b for b in selected}
+            parent_map = {}
+            for b in selected:
+                p = b["parent_uid"]
+                if p: parent_map.setdefault(p, []).append(b["uid"])
+
+            def extract_tags(t): return " ".join(re.findall(r"#\w+|\[\[.*?\]\]", t))
+            def get_chunk(b):
+                parent = uid_map.get(b["parent_uid"], {}).get("string", "")
+                children = [uid_map[c]["string"] for c in parent_map.get(b["uid"], []) if uid_map.get(c)]
+                return f"Page: {b['page_title']} {extract_tags(b['string'])} {parent} {b['string']} {' '.join(children)}".strip()
+
+            texts = [get_chunk(b) for b in selected]
+            refs = [f'(({b["uid"]}))' for b in selected]
+            model = get_model()
+            embeddings = model.encode(texts, batch_size=64, convert_to_numpy=True, show_progress_bar=True)
+            dim = embeddings.shape[1]
+            index = faiss.IndexFlatL2(dim)
+            index.add(embeddings)
+
+            metadata = []
+            for i, b in enumerate(selected):
+                uid = b["uid"]
+                metadata.append({
+                    "text": texts[i],
+                    "ref": refs[i],
+                    "uid": uid,
+                    "parent_uid": b.get("parent_uid"),
+                    "page_title": b.get("page_title"),
+                    "children": [uid_map[j]["uid"] for j in parent_map.get(uid, [])],
+                    "is_rap": "#raps" in texts[i].lower() or "[[raps]]" in texts[i].lower(),
+                    "is_ripe": "[[ripe]]" in texts[i].lower(),
+                    "near_idea": False
+                })
+
+            files = get_filenames(brain)
+            faiss.write_index(index, files["index"])
+            with open(files["meta"], "w", encoding="utf-8") as f:
+                json.dump(metadata, f)
+
+        return {"status": "success"}
+
     except Exception as e:
         logging.exception("❌ Reindex failed")
         send_email_alert("🚨 Reindex Failed", str(e))
