@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -e
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -19,7 +20,7 @@ if [ ! -f server.py ]; then
   echo "❌ server.py not found"; exit 1
 fi
 
-echo "�� Stopping API service..."
+echo "🛑 Stopping API service..."
 systemctl stop semantic-api.service
 pkill -f uvicorn || true
 sleep 2
@@ -49,3 +50,5 @@ until curl -s -f http://localhost:8000/ > /dev/null; do
 done
 
 echo "✅ API is running at root route."
+echo "🎉 EVERYTHING IS OKAY"
+exit 0
