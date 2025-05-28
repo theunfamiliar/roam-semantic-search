@@ -2,22 +2,22 @@
 
 set -e
 
-# Optional commit message
+# 📝 Optional commit message
 COMMIT_MSG="${1:-.}"
 
-# Log output
+# 📜 Log to timestamped file
 mkdir -p logs
 timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 logfile="logs/deploy-$timestamp.log"
 exec > >(tee -a "$logfile") 2>&1
 
-# Git operations
+# 🚀 Local Git push
 echo "▶️ Committing changes to GitHub..."
 git add .
 git commit -m "$COMMIT_MSG" || echo "⚠️ Nothing to commit."
 git push --force origin main
 
-# SSH into VPS and deploy
+# 📡 SSH into VPS and deploy
 echo "🚀 SSHing into VPS and pulling latest code..."
 ssh -tt singularity << 'ENDSSH'
   set -e
@@ -60,9 +60,8 @@ ssh -tt singularity << 'ENDSSH'
   ROOT_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/)
   if [ "$ROOT_STATUS" == "200" ]; then
     echo "✅ API is running at root route."
+    echo "🎉 Deployment successful!"
   else
     echo "❌ Root route failed with status $ROOT_STATUS"; exit 1
   fi
-
-  echo "✅ Deployment complete."
 ENDSSH
