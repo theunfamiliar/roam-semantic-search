@@ -1,18 +1,11 @@
 #!/bin/bash
 set -e
 
-print() {
-  echo -e "\033[1;36m$1\033[0m"
-}
-
-COMMIT_MSG="${1:-.}"
-
-print "🔧 Committing local changes..."
+echo "🔧 Committing local changes..."
 git add .
-git commit -m "$COMMIT_MSG" || echo "⚠️ Nothing to commit."
-git push origin main
+git commit -m "${1:-🔄 Deploying latest changes}" || echo "⚠️ Nothing to commit."
+git push
 
-print "🌐 SSHing into VPS to deploy..."
-ssh -t singularity "bash /root/roam-semantic-search/scripts/deploy-remote.sh" \
-  && echo -e "\033[1;32m✅ DEPLOY SUCCESSFUL\033[0m" \
-  || echo -e "\033[1;31m❌ DEPLOY FAILED\033[0m"
+echo "🌐 SSHing into VPS to deploy..."
+scp scripts/deploy-remote.sh root@207.180.227.18:/root/roam-semantic-search/scripts/deploy-remote.sh
+ssh -t root@207.180.227.18 "cd /root/roam-semantic-search && chmod +x scripts/deploy-remote.sh && ./scripts/deploy-remote.sh" && echo "✅ DEPLOY SUCCESS" || echo "❌ DEPLOY FAILED"
