@@ -2,24 +2,20 @@
 
 set -e
 
+print() {
+  echo -e "\033[1;36m$1\033[0m"
+}
+
 # Optional commit message
 COMMIT_MSG="${1:-.}"
 
-# Log to timestamped file
-mkdir -p logs
-timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-logfile="logs/deploy-$timestamp.log"
-exec > >(tee -a "$logfile") 2>&1
-
-# Local Git push
-echo "▶️ Committing changes to GitHub..."
+print "🔧 Committing local changes..."
 git add .
 git commit -m "$COMMIT_MSG" || echo "⚠️ Nothing to commit."
-git push --force origin main
+git push origin main
 
-# SSH into VPS and deploy
-echo "🚀 SSHing into VPS and pulling latest code..."
-ssh -tt singularity << 'ENDSSH'
+print "🌐 SSHing into VPS to deploy..."
+ssh singularity << 'EOF'
   set -e
 
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -47,7 +43,7 @@ ssh -tt singularity << 'ENDSSH'
 
   echo "🔄 Checking port 8000..."
   if lsof -i :8000; then
-    echo "❌ Port 8000 still in use"; exit 1
+    echo "❌ Port 8000 in use"; exit 1
   else
     echo "✅ Port 8000 is free"
   fi
@@ -59,10 +55,16 @@ ssh -tt singularity << 'ENDSSH'
   sleep 3
 
   echo "🧾 Checking root route..."
-  curl -v http://localhost:8000/ || { echo "❌ API not responding at root route"; exit 1; }
-  echo "✅ API is running."
+  attempts=0
+  until curl -s -f http://localhost:8000/ > /dev/null; do
+    ((attempts++))
+    if [ $attempts -ge 10 ]; then
+      echo "❌ API not responding at root route after 10 attempts"; exit 1
+    fi
+    sleep 1
+    echo "...retrying ($attempts)"
+  done
 
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  echo "✅ Deployment successful. Server is up and responding."
-  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-ENDSSH
+  echo "✅ API is running at root route."
+  echo "🎉 EVERYTHING IS OKAY"
+EOF

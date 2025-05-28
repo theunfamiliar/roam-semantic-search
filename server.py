@@ -23,12 +23,15 @@ logging.basicConfig(
 
 security = HTTPBasic()
 
+
 def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
     if credentials.username != os.getenv("USERNAME", "admin") or credentials.password != os.getenv("PASSWORD", "secret"):
         raise HTTPException(status_code=401, detail="Unauthorized. Use correct Basic Auth.")
     return True
 
+
 app = FastAPI(title="Roam Semantic Search API", version="1.0.0")
+
 
 class SearchRequest(BaseModel):
     query: str
@@ -39,6 +42,7 @@ class SearchRequest(BaseModel):
     rhyme_sound: str | None = None
     brain: str = "ideas"
 
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://roamresearch.com"],
@@ -47,11 +51,44 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
-def root(): return JSONResponse(content={"status": "running"})
+def root():
+    return JSONResponse(content={"status": "running"})
+
 
 @app.get("/ping")
-def ping(): return {"ping": "pong"}
+def ping():
+    return {"ping": "pong"}
+
+
+@app.post("/search")
+def search(req: SearchRequest, auth: bool = Depends(authenticate)):
+    try:
+        files = get_filenames(req.brain)
+        if not os.path.exists(files["index"]) or not os.path.exists(files["meta"]):
+            raise HTTPException(status_code=400, detail="Missing index or metadata. Try reindexing first.")
+
+        index = faiss.read_index(files["index"])
+        with open(files["meta"], "r", encoding="utf-8") as f:
+            metadata = json.load(f)
+
+        model = get_model()
+        embedding = model.encode(req.query, convert_to_numpy=True)
+
+        top_k = req.top_k
+        D, I = index.search(np.array([embedding]), top_k)
+        results = [metadata[i] for i in I[0]]
+
+        return {
+            "results": results,
+            "count": len(results),
+            "query": req.query
+        }
+    except Exception as e:
+        logging.exception("❌ Search failed")
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/reindex")
 async def reindex(auth: bool = Depends(authenticate)):
@@ -62,11 +99,6 @@ async def reindex(auth: bool = Depends(authenticate)):
         "Content-Type": "application/json"
     }
 
-    toc_titles = {
-        "ideas": "TOC - ideas",
-        "work": "TOC - marketing"
-    }
-
     toc_query = {
         "query": """
         [:find ?brain ?title
@@ -74,7 +106,7 @@ async def reindex(auth: bool = Depends(authenticate)):
          [?toc :node/title ?brain]
          [?toc :block/children ?child]
          [?child :block/string ?title]
-         [(clojure.string/starts-with? ?brain "TOC -")]]
+         [(clojure.string/starts-with? ?brain \"TOC -\")]]
         """
     }
 
@@ -117,11 +149,9 @@ async def reindex(auth: bool = Depends(authenticate)):
             uid_map = {}
             for b in blocks:
                 uid_map[b["uid"]] = b
-                # foundational: directly in TOC
                 if b["page_title"] in tags or b["string"] in tags:
                     b["__weight"] = 1.0
                     selected.append(b)
-                # secondary: references a TOC page
                 elif any(f"[[{tag}]]" in b["string"] or f"#{tag}" in b["string"] for tag in tags):
                     b["__weight"] = 0.5
                     selected.append(b)
@@ -133,16 +163,18 @@ async def reindex(auth: bool = Depends(authenticate)):
             parent_map = {}
             for b in selected:
                 p = b.get("parent_uid")
-                if p: parent_map.setdefault(p, []).append(b["uid"])
+                if p:
+                    parent_map.setdefault(p, []).append(b["uid"])
 
             def extract_tags(t): return " ".join(re.findall(r"#\w+|\[\[.*?\]\]", t))
+
             def get_chunk(b):
                 parent = uid_map.get(b["parent_uid"], {}).get("string", "")
                 children = [uid_map[c]["string"] for c in parent_map.get(b["uid"], []) if uid_map.get(c)]
                 return f"Page: {b['page_title']} {extract_tags(b['string'])} {parent} {b['string']} {' '.join(children)}".strip()
 
             texts = [get_chunk(b) for b in selected]
-            refs = [f'(({b["uid"]}))' for b in selected]
+            refs = [f"(({b['uid']}))" for b in selected]
             weights = [b["__weight"] for b in selected]
             model = get_model()
             embeddings = model.encode(texts, batch_size=64, convert_to_numpy=True, show_progress_bar=True)
@@ -177,4 +209,14 @@ async def reindex(auth: bool = Depends(authenticate)):
         logging.exception("❌ Reindex failed")
         raise HTTPException(status_code=500, detail=str(e))
 
+
 SearchRequest.model_rebuild()
+
+def get_model():
+    return SentenceTransformer("all-MiniLM-L6-v2")
+
+def get_filenames(brain):
+    return {
+        "index": f"data/index_{brain}.faiss",
+        "meta": f"data/metadata_{brain}.json"
+    }
