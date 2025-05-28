@@ -6,6 +6,7 @@ print() {
   echo -e "\033[1;36m$1\033[0m"
 }
 
+# Optional commit message
 COMMIT_MSG="${1:-.}"
 
 print "🔧 Committing local changes..."
@@ -66,5 +67,4 @@ ssh -tt singularity << 'EOF'
 
   echo "✅ API is running at root route."
   echo "🎉 EVERYTHING IS OKAY"
-  sleep 1  # Let stdout flush before SSH closes
 EOF
