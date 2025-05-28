@@ -66,44 +66,24 @@ ssh -tt singularity << 'ENDSSH'
   echo "📡 Hitting root route..."
   ROOT_OUTPUT=$(curl -s -w "\nHTTP_STATUS:%{http_code}" http://localhost:8000/)
   ROOT_STATUS=$(echo "$ROOT_OUTPUT" | tail -n1 | sed 's/HTTP_STATUS://')
-  ROOT_BODY=$(echo "$ROOT_OUTPUT" | sed '$d')
-  echo "🌐 Status: $ROOT_STATUS"
-  echo "📝 Body: $ROOT_BODY"
-  if [ "$ROOT_STATUS" != "200" ]; then
-    echo "❌ Root route failed"; exit 1
-  fi
-
-  echo "📡 Hitting /search route..."
-  SEARCH_OUTPUT=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -u admin:secret -H "Content-Type: application/json" \
-    -d '{"query":"test","top_k":1,"brain":"ideas"}' http://localhost:8000/search)
-  SEARCH_STATUS=$(echo "$SEARCH_OUTPUT" | tail -n1 | sed 's/HTTP_STATUS://')
-  SEARCH_BODY=$(echo "$SEARCH_OUTPUT" | sed '$d')
-  echo "🌐 Status: $SEARCH_STATUS"
-  echo "📝 Body: $SEARCH_BODY"
-
-  if [ "$SEARCH_STATUS" != "200" ]; then
-    echo "⚠️ Search route failed, attempting reindex..."
-
-    echo "🔁 Reindexing..."
-    REINDEX_OUTPUT=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -u admin:secret -X POST http://localhost:8000/reindex)
-    REINDEX_STATUS=$(echo "$REINDEX_OUTPUT" | tail -n1 | sed 's/HTTP_STATUS://')
-    REINDEX_BODY=$(echo "$REINDEX_OUTPUT" | sed '$d')
-    echo "🌐 Status: $REINDEX_STATUS"
-    echo "📝 Body: $REINDEX_BODY"
-    if [ "$REINDEX_STATUS" != "200" ]; then
-      echo "❌ Reindex failed"; exit 1
-    fi
-
-    echo "✅ Reindex complete. Semantic API is now ready."
+  echo "$ROOT_OUTPUT" | sed '$d'
+  if [ "$ROOT_STATUS" = "200" ]; then
+    echo "✅ Root route returned 200"
   else
-    echo "✅ Search route responded successfully."
+    echo "❌ Root route failed with status $ROOT_STATUS"; exit 1
+  fi
+
+  echo "📡 Hitting /reindex route..."
+  REINDEX_OUTPUT=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -u admin:secret -X POST http://localhost:8000/reindex)
+  REINDEX_STATUS=$(echo "$REINDEX_OUTPUT" | tail -n1 | sed 's/HTTP_STATUS://')
+  echo "$REINDEX_OUTPUT" | sed '$d'
+  if [ "$REINDEX_STATUS" = "200" ]; then
+    echo "✅ Reindex succeeded"
+  else
+    echo "❌ Reindex failed with status $REINDEX_STATUS"; exit 1
   fi
 
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  echo "✅ Deploy Complete"
+  echo "🎉 EVERYTHING IS OKAY. Server is live and reindex is successful."
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  echo ""
-  echo "🎉 EVERYTHING IS OKAY. The server is up. The routes work. You did it. 🎉"
-  echo "👉 You can now run reindex or test queries from Roam as needed."
-  echo ""
 ENDSSH
