@@ -1,4 +1,11 @@
-# ... all previous import and setup code remains unchanged ...
+from fastapi import FastAPI, Depends, HTTPException
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from pydantic import BaseModel
+import os, json, faiss, numpy as np, re, logging, httpx
+
+# Assume ROAM_TOKEN, ROAM_GRAPH, and get_model() are already defined above
+
+app = FastAPI(title="Roam Semantic Search API", version="1.0.0")
 
 @app.post("/reindex")
 async def reindex(auth: bool = Depends(authenticate)):
