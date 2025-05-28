@@ -15,7 +15,7 @@ git commit -m "$COMMIT_MSG" || echo "⚠️ Nothing to commit."
 git push origin main
 
 print "🌐 SSHing into VPS to deploy..."
-ssh singularity << 'EOF'
+ssh -tt singularity << 'EOF'
   set -e
 
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
