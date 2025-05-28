@@ -14,33 +14,58 @@ git commit -m "$COMMIT_MSG" || echo "⚠️ Nothing to commit."
 git push origin main
 
 print "🌐 SSHing into VPS to deploy..."
-DEPLOY_OUTPUT=$(ssh -tt singularity << 'EOF'
+DEPLOY_OUTPUT=$(ssh -tt singularity bash << 'EOF'
   set -e
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "📍 Connected to VPS - Starting Deploy"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
   cd /root/roam-semantic-search
   chmod +x ./scripts/*.sh
+
+  echo "📦 Pulling latest from GitHub..."
   git fetch origin
   git reset --hard origin/main
-  if [ ! -f server.py ]; then echo "❌ server.py not found"; exit 1; fi
+
+  echo "🧠 Checking for server.py..."
+  [ -f server.py ] || { echo "❌ server.py not found"; exit 1; }
+
+  echo "🛑 Stopping API service..."
   systemctl stop semantic-api.service
   pkill -f uvicorn || true
   sleep 2
-  if lsof -i :8000; then echo "❌ Port 8000 in use"; exit 1; fi
+
+  echo "🔄 Checking port 8000..."
+  if lsof -i :8000 > /dev/null; then
+    echo "❌ Port 8000 in use"; exit 1
+  else
+    echo "✅ Port 8000 is free"
+  fi
+
+  echo "🔁 Restarting API service..."
   systemctl start semantic-api.service
   sleep 3
+
+  echo "🧾 Checking root route..."
   attempts=0
   until curl -s -f http://localhost:8000/ > /dev/null; do
     ((attempts++))
-    if [ $attempts -ge 10 ]; then echo "❌ API not responding"; exit 1; fi
+    if [ $attempts -ge 10 ]; then
+      echo "❌ API not responding at root route after 10 attempts"
+      exit 1
+    fi
     sleep 1
+    echo "...retrying ($attempts)"
   done
+
   echo "✅ DEPLOY SUCCESSFUL"
 EOF
 )
 
+echo "$DEPLOY_OUTPUT"
+
 if echo "$DEPLOY_OUTPUT" | grep -q "✅ DEPLOY SUCCESSFUL"; then
-  print "🎉 DEPLOY CONFIRMED: Everything is okay."
+  echo -e "\n🎉 DEPLOY CONFIRMED: Everything is okay."
 else
-  echo "$DEPLOY_OUTPUT"
-  echo "❌ Deploy may have failed. Check logs manually."
-  exit 1
+  echo -e "\n❌ Deploy may have failed. Check logs above."
 fi
