@@ -15,9 +15,5 @@ git commit -m "$COMMIT_MSG" || echo "⚠️ Nothing to commit."
 git push origin main
 
 print "🌐 SSHing into VPS to deploy..."
-
-# Upload the remote deploy script
-scp scripts/deploy-remote.sh singularity:/root/deploy-remote.sh
-
-# Run the remote deploy script with proper TTY
-ssh -tt singularity "bash /root/deploy-remote.sh"
+scp ./scripts/deploy-remote.sh singularity:/root/roam-semantic-search/scripts/deploy-remote.sh
+ssh -tt singularity 'bash -l -c "cd /root/roam-semantic-search && ./scripts/deploy-remote.sh"'
