@@ -49,4 +49,3 @@ until curl -s -f http://localhost:8000/ > /dev/null; do
 done
 
 echo "✅ API is running at root route."
-echo "🎉 DEPLOY COMPLETE AND HEALTHY"

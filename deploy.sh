@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 print() {
@@ -14,11 +13,6 @@ git commit -m "$COMMIT_MSG" || echo "⚠️ Nothing to commit."
 git push origin main
 
 print "🌐 SSHing into VPS to deploy..."
-scp ./scripts/deploy-remote.sh singularity:/root/roam-semantic-search/scripts/deploy-remote.sh
-
-# ⬅️ This line is the fix: use -t -t to force pseudo-terminal
-ssh -t -t singularity << 'EOF'
-  cd /root/roam-semantic-search
-  chmod +x scripts/deploy-remote.sh
-  ./scripts/deploy-remote.sh
-EOF
+ssh -t singularity "bash /root/roam-semantic-search/scripts/deploy-remote.sh" \
+  && echo -e "\033[1;32m✅ DEPLOY SUCCESSFUL\033[0m" \
+  || echo -e "\033[1;31m❌ DEPLOY FAILED\033[0m"
