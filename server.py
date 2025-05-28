@@ -34,6 +34,12 @@ class SearchRequest(BaseModel):
 
 security = HTTPBasic()
 
+
+def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
+    if credentials.username != os.getenv("USERNAME", "admin") or credentials.password != os.getenv("PASSWORD", "secret"):
+        raise HTTPException(status_code=401, detail="Unauthorized. Use correct Basic Auth.")
+    return True
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://roamresearch.com"],
@@ -52,8 +58,6 @@ _model = None
 DATA_DIR = "data"
 os.makedirs(DATA_DIR, exist_ok=True)
 
-USERNAME = os.getenv("USERNAME", "admin")
-PASSWORD = os.getenv("PASSWORD", "secret")
 ROAM_GRAPH = os.getenv("ROAM_GRAPH", "unfamiliar")
 ROAM_TOKEN = os.getenv("ROAM_TOKEN")
 
@@ -78,12 +82,6 @@ def get_model():
         print("→ Loading SentenceTransformer model...")
         _model = SentenceTransformer("all-MiniLM-L6-v2")
     return _model
-
-
-def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
-    if credentials.username != USERNAME or credentials.password != PASSWORD:
-        raise HTTPException(status_code=401, detail="Unauthorized. Use correct Basic Auth.")
-    return True
 
 
 def get_filenames(brain: str):
