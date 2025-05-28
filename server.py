@@ -21,6 +21,14 @@ logging.basicConfig(
     force=True
 )
 
+security = HTTPBasic()
+
+
+def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
+    if credentials.username != os.getenv("USERNAME", "admin") or credentials.password != os.getenv("PASSWORD", "secret"):
+        raise HTTPException(status_code=401, detail="Unauthorized. Use correct Basic Auth.")
+    return True
+
 app = FastAPI(title="Roam Semantic Search API", version="1.0.0")
 
 class SearchRequest(BaseModel):
@@ -31,14 +39,6 @@ class SearchRequest(BaseModel):
     mode: str = "Next RAP"
     rhyme_sound: str | None = None
     brain: str = "ideas"
-
-security = HTTPBasic()
-
-
-def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
-    if credentials.username != os.getenv("USERNAME", "admin") or credentials.password != os.getenv("PASSWORD", "secret"):
-        raise HTTPException(status_code=401, detail="Unauthorized. Use correct Basic Auth.")
-    return True
 
 app.add_middleware(
     CORSMiddleware,
