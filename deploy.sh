@@ -65,22 +65,26 @@ ssh -tt singularity << 'ENDSSH'
 
   echo "📡 Hitting root route..."
   ROOT_OUTPUT=$(curl -s -w "\nHTTP_STATUS:%{http_code}" http://localhost:8000/)
-  ROOT_STATUS=$(echo "$ROOT_OUTPUT" | tail -n1 | sed 's/HTTP_STATUS://')
-  echo "$ROOT_OUTPUT" | sed '$d'
-  if [ "$ROOT_STATUS" = "200" ]; then
-    echo "✅ Root route returned 200"
+  HTTP_STATUS=$(echo "$ROOT_OUTPUT" | grep HTTP_STATUS | cut -d':' -f2)
+  ROOT_BODY=$(echo "$ROOT_OUTPUT" | sed '$d')
+  echo "📝 Body: $ROOT_BODY"
+  if [ "$HTTP_STATUS" = "200" ]; then
+    echo "✅ Root route responded OK"
   else
-    echo "❌ Root route failed with status $ROOT_STATUS"; exit 1
+    echo "❌ Root route failed with status $HTTP_STATUS"
+    exit 1
   fi
 
   echo "📡 Hitting /reindex route..."
   REINDEX_OUTPUT=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -u admin:secret -X POST http://localhost:8000/reindex)
-  REINDEX_STATUS=$(echo "$REINDEX_OUTPUT" | tail -n1 | sed 's/HTTP_STATUS://')
-  echo "$REINDEX_OUTPUT" | sed '$d'
+  REINDEX_STATUS=$(echo "$REINDEX_OUTPUT" | grep HTTP_STATUS | cut -d':' -f2)
+  REINDEX_BODY=$(echo "$REINDEX_OUTPUT" | sed '$d')
+  echo "📝 Body: $REINDEX_BODY"
   if [ "$REINDEX_STATUS" = "200" ]; then
     echo "✅ Reindex succeeded"
   else
-    echo "❌ Reindex failed with status $REINDEX_STATUS"; exit 1
+    echo "❌ Reindex failed with status $REINDEX_STATUS"
+    exit 1
   fi
 
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
