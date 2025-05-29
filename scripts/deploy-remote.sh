@@ -13,7 +13,22 @@ git fetch origin
 git reset --hard origin/main
 
 echo "🔐 Making scripts executable..."
-chmod +x start.sh stop.sh restart.sh
+chmod +x start.sh stop.sh restart.sh setup.sh
+
+# Check if Docker is running
+echo "🔍 Checking Docker status..."
+if ! docker info &> /dev/null; then
+    echo "⚠️ Docker is not running or not installed"
+    echo "🔧 Running setup script..."
+    ./setup.sh
+    
+    # Check again after setup
+    if ! docker info &> /dev/null; then
+        echo "❌ Docker setup failed. Please check the server manually."
+        exit 1
+    fi
+    echo "✅ Docker is now running"
+fi
 
 echo "🔨 Rebuilding and restarting containers..."
 ./restart.sh rebuild
