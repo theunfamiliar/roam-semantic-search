@@ -1,0 +1,52 @@
+▶️ Committing changes to GitHub...
+On branch main
+nothing to commit, working tree clean
+⚠️ Nothing to commit.
+To github.com:theunfamiliar/roam-semantic-search.git
+   b049cfb..a27893c  main -> main
+🚀 SSHing into VPS and pulling latest code...
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📍 Connected to VPS - Starting Deploy
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 Forcing latest from GitHub (reset)...
+From github.com:theunfamiliar/roam-semantic-search
+   b049cfb..a27893c  main       -> origin/main
+HEAD is now at a27893c 📧 Add logging + email alerts to reindex and import scripts
+🧠 Checking for server.py...
+🛑 Releasing port 8000 if blocked...
+ 2805198000/tcp:           
+🔄 Restarting API service...
+🪵 Dumping last 30 log lines from semantic-api.service...
+May 11 14:36:43 vmi2583988 uvicorn[291355]: ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 8000): address already in use
+May 11 14:36:43 vmi2583988 uvicorn[291355]: INFO:     Waiting for application shutdown.
+May 11 14:36:43 vmi2583988 uvicorn[291355]: INFO:     Application shutdown complete.
+May 11 14:36:43 vmi2583988 uvicorn[291355]: 🔍 Registered routes:
+May 11 14:36:43 vmi2583988 uvicorn[291355]:   /openapi.json -> openapi (GET,HEAD)
+May 11 14:36:43 vmi2583988 uvicorn[291355]:   /docs -> swagger_ui_html (GET,HEAD)
+May 11 14:36:43 vmi2583988 uvicorn[291355]:   /docs/oauth2-redirect -> swagger_ui_redirect (GET,HEAD)
+May 11 14:36:43 vmi2583988 uvicorn[291355]:   /redoc -> redoc_html (GET,HEAD)
+May 11 14:36:43 vmi2583988 uvicorn[291355]:   / -> root (GET)
+May 11 14:36:43 vmi2583988 uvicorn[291355]:   /ping -> ping (GET)
+May 11 14:36:43 vmi2583988 uvicorn[291355]:   /docs -> docs_redirect (GET)
+May 11 14:36:43 vmi2583988 uvicorn[291355]:   /semantic -> semantic_entrypoint (POST)
+May 11 14:36:43 vmi2583988 uvicorn[291355]:   /search -> legacy_search (POST)
+May 11 14:36:43 vmi2583988 uvicorn[291355]:   /reindex -> reindex (POST)
+May 11 14:36:45 vmi2583988 systemd[1]: semantic-api.service: Main process exited, code=exited, status=1/FAILURE
+May 11 14:36:45 vmi2583988 systemd[1]: semantic-api.service: Failed with result 'exit-code'.
+May 11 14:36:45 vmi2583988 systemd[1]: semantic-api.service: Consumed 14.446s CPU time.
+May 11 14:36:48 vmi2583988 systemd[1]: semantic-api.service: Scheduled restart job, restart counter is at 642.
+May 11 14:36:48 vmi2583988 systemd[1]: Starting semantic-api.service - Semantic Search API (Roam)...
+May 11 14:36:48 vmi2583988 systemd[1]: Started semantic-api.service - Semantic Search API (Roam).
+May 11 14:36:57 vmi2583988 systemd[1]: Stopping semantic-api.service - Semantic Search API (Roam)...
+May 11 14:37:01 vmi2583988 uvicorn[291368]: INFO:     Started server process [291368]
+May 11 14:37:01 vmi2583988 uvicorn[291368]: INFO:     Waiting for application startup.
+May 11 14:37:01 vmi2583988 uvicorn[291368]: INFO:     Application startup complete.
+May 11 14:37:01 vmi2583988 uvicorn[291368]: INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+May 11 14:37:02 vmi2583988 systemd[1]: semantic-api.service: Deactivated successfully.
+May 11 14:37:02 vmi2583988 systemd[1]: Stopped semantic-api.service - Semantic Search API (Roam).
+May 11 14:37:02 vmi2583988 systemd[1]: semantic-api.service: Consumed 14.101s CPU time.
+May 11 14:37:02 vmi2583988 systemd[1]: Starting semantic-api.service - Semantic Search API (Roam)...
+May 11 14:37:02 vmi2583988 systemd[1]: Started semantic-api.service - Semantic Search API (Roam).
+⏳ Waiting for API to boot...
+📡 Hitting root route...

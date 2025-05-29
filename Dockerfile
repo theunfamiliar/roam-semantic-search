@@ -21,4 +21,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
+# Create log directories with appropriate permissions
+RUN mkdir -p /app/logs/{server,deploy,audit,performance,data,search} && \
+    chmod -R 755 /app/logs
+
+CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "8000", "--log-config", "config/logging.yaml"]

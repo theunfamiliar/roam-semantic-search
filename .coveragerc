@@ -1,0 +1,27 @@
+[run]
+source = app
+branch = True
+parallel = True
+concurrency = multiprocessing,thread
+
+[report]
+precision = 2
+show_missing = True
+skip_covered = True
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    pass
+    raise ImportError
+
+[html]
+directory = logs/coverage/html
+title = Code Coverage Report
+
+[json]
+output = logs/coverage/coverage.json
+
+[xml]
+output = logs/coverage/coverage.xml 

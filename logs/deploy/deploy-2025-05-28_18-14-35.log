@@ -1,0 +1,97 @@
+▶️ Committing changes to GitHub...
+On branch main
+nothing to commit, working tree clean
+⚠️ Nothing to commit.
+Everything up-to-date
+🚀 SSHing into VPS and pulling latest code...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   set -e
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+[?2004l━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "📍 Connected to VPS - Starting Deploy"
+[?2004l📍 Connected to VPS - Starting Deploy
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+[?2004l━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   cd /root/roam-semantic-search
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🔐 Ensuring all scripts are executable..."
+[?2004l🔐 Ensuring all scripts are executable...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   chmod +x ./scripts/*.sh
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "📦 Forcing latest from GitHub (reset)..."
+[?2004l📦 Forcing latest from GitHub (reset)...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   git fetch origin
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   git reset --hard origin/main
+[?2004lHEAD is now at 935a3bc .
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🧠 Checking for server.py..."
+[?2004l🧠 Checking for server.py...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   if [ ! -f server.py ]; then
+[?2004l[?2004h>     echo "❌ server.py not found"; exit 1
+[?2004l[?2004h>   fi
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🛑 Stopping systemd service (semantic-api.service)..."
+[?2004l🛑 Stopping systemd service (semantic-api.service)...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   systemctl stop semantic-api.service
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🔪 Killing any lingering uvicorn processes..."
+[?2004l🔪 Killing any lingering uvicorn processes...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   pkill -f uvicorn || true
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   sleep 2
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🔄 Verifying port 8000 is free..."
+[?2004l🔄 Verifying port 8000 is free...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   if lsof -i :8000; then
+[?2004l[?2004h>     echo "❌ Port 8000 still in use!"; exit 1
+[?2004l[?2004h>   else
+[?2004l[?2004h>     echo "✅ Port 8000 successfully cleared"
+[?2004l[?2004h>   fi
+[?2004l✅ Port 8000 successfully cleared
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🔄 Restarting API service..."
+[?2004l🔄 Restarting API service...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   systemctl start semantic-api.service
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🪵 Dumping last 30 log lines from semantic-api.service..."
+[?2004l🪵 Dumping last 30 log lines from semantic-api.service...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   journalctl -u semantic-api.service -n 30 --no-pager
+[?2004lMay 28 18:14:51 vmi2583988 uvicorn[1258078]:     return future.result()
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:            ^^^^^^^^^^^^^^^
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:   File "/root/roam-semantic-search/venv/lib/python3.12/site-packages/uvicorn/server.py", line 70, in serve
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:     await self._serve(sockets)
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:   File "/root/roam-semantic-search/venv/lib/python3.12/site-packages/uvicorn/server.py", line 77, in _serve
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:     config.load()
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:   File "/root/roam-semantic-search/venv/lib/python3.12/site-packages/uvicorn/config.py", line 435, in load
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:     self.loaded_app = import_from_string(self.app)
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:   File "/root/roam-semantic-search/venv/lib/python3.12/site-packages/uvicorn/importer.py", line 19, in import_from_string
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:     module = importlib.import_module(module_str)
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:   File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:     return _bootstrap._gcd_import(name[level:], package, level)
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:   File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:   File "/root/roam-semantic-search/server.py", line 3, in <module>
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:     @app.post("/reindex")
+May 28 18:14:51 vmi2583988 uvicorn[1258078]:      ^^^
+May 28 18:14:51 vmi2583988 uvicorn[1258078]: NameError: name 'app' is not defined
+May 28 18:14:51 vmi2583988 systemd[1]: [0;1;39m[0;1;31m[0;1;39msemantic-api.service: Main process exited, code=exited, status=1/FAILURE[0m
+May 28 18:14:51 vmi2583988 systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185msemantic-api.service: Failed with result 'exit-code'.[0m
+May 28 18:14:52 vmi2583988 systemd[1]: Stopped semantic-api.service - Semantic Search API (Roam).
+May 28 18:14:54 vmi2583988 systemd[1]: Starting semantic-api.service - Semantic Search API (Roam)...
+May 28 18:14:54 vmi2583988 systemd[1]: Started semantic-api.service - Semantic Search API (Roam).
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "⏳ Waiting for API to boot..."
+[?2004l⏳ Waiting for API to boot...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   sleep 3
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "📡 Hitting root route..."
+[?2004l📡 Hitting root route...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   ROOT_OUTPUT=$(curl -s -w "\nHTTP_STATUS:%{http_code}" http://localhost:8000/)
+[?2004lConnection to 207.180.227.18 closed.

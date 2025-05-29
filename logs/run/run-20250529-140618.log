@@ -1,0 +1,1062 @@
+Starting application in dev mode...
+Starting application in dev mode...
+Logging to: logs/run/run-20250529-140618.log
+Logging to: logs/run/run-20250529-140618.log
+🚀 Starting in development mode...
+🚀 Starting in development mode...
+ Container roam-semantic-search-certbot-1  Running
+ Container roam-semantic-search-nginx-1  Running
+Attaching to app-1, certbot-1, nginx-1
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 573, in configure
+app-1      |     handler = self.configure_handler(handlers[name])
+app-1      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 757, in configure_handler
+app-1      |     result = factory(**kwargs)
+app-1      |              ^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 214, in __init__
+app-1      |     BaseRotatingHandler.__init__(self, filename, 'a', encoding=encoding,
+app-1      |   File "/usr/local/lib/python3.11/logging/handlers.py", line 58, in __init__
+app-1      |     logging.FileHandler.__init__(self, filename, mode=mode,
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1181, in __init__
+app-1      |     StreamHandler.__init__(self, self._open())
+app-1      |                                  ^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/logging/__init__.py", line 1213, in _open
+app-1      |     return open_func(self.baseFilename, self.mode,
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      | FileNotFoundError: [Errno 2] No such file or directory: '/app/logs/data/operations.log'
+app-1      | 
+app-1      | The above exception was the direct cause of the following exception:
+app-1      | 
+app-1      | Traceback (most recent call last):
+app-1      |   File "/usr/local/bin/uvicorn", line 8, in <module>
+app-1      |     sys.exit(main())
+app-1      |              ^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1442, in __call__
+app-1      |     return self.main(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1363, in main
+app-1      |     rv = self.invoke(ctx)
+app-1      |          ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1226, in invoke
+app-1      |     return ctx.invoke(self.callback, **ctx.params)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 794, in invoke
+app-1      |     return callback(*args, **kwargs)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 413, in main
+app-1      |     run(
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 580, in run
+app-1      |     server.run()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 66, in run
+app-1      |     return asyncio.run(self.serve(sockets=sockets))
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+app-1      |     return runner.run(main)
+app-1      |            ^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+app-1      |     return self._loop.run_until_complete(task)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+app-1      |     return future.result()
+app-1      |            ^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 70, in serve
+app-1      |     await self._serve(sockets)
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 77, in _serve
+app-1      |     config.load()
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 435, in load
+app-1      |     self.loaded_app = import_from_string(self.app)
+app-1      |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+app-1      |     module = importlib.import_module(module_str)
+app-1      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+app-1      |     return _bootstrap._gcd_import(name[level:], package, level)
+app-1      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app-1      |   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+app-1      |   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+app-1      |   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+app-1      |   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+app-1      |   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+app-1      |   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+app-1      |   File "/app/server.py", line 8, in <module>
+app-1      |     setup_logging()
+app-1      |   File "/app/app/utils/logging.py", line 21, in setup_logging
+app-1      |     logging.config.dictConfig(config)
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 823, in dictConfig
+app-1      |     dictConfigClass(config).configure()
+app-1      |   File "/usr/local/lib/python3.11/logging/config.py", line 580, in configure
+app-1      |     raise ValueError('Unable to configure handler '
+app-1      | ValueError: Unable to configure handler 'data_file'

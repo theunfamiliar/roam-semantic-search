@@ -1,0 +1,117 @@
+▶️ Committing changes to GitHub...
+[main 84f1c15] Update graph ingest script
+ Committer: James Dunn <jamesdunn@Jamess-MacBook-Air-2.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 3 insertions(+)
+To github.com:theunfamiliar/roam-semantic-search.git
+   8640162..84f1c15  main -> main
+🚀 SSHing into VPS and pulling latest code...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   set -e
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+[?2004l━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "📍 Connected to VPS - Starting Deploy"
+[?2004l📍 Connected to VPS - Starting Deploy
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+[?2004l━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   cd /root/roam-semantic-search
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🔐 Ensuring all scripts are executable..."
+[?2004l🔐 Ensuring all scripts are executable...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   chmod +x ./scripts/*.sh
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "📦 Forcing latest from GitHub (reset)..."
+[?2004l📦 Forcing latest from GitHub (reset)...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   git fetch origin
+[?2004lremote: Enumerating objects: 11, done.[K
+remote: Counting objects:   9% (1/11)[Kremote: Counting objects:  18% (2/11)[Kremote: Counting objects:  27% (3/11)[Kremote: Counting objects:  36% (4/11)[Kremote: Counting objects:  45% (5/11)[Kremote: Counting objects:  54% (6/11)[Kremote: Counting objects:  63% (7/11)[Kremote: Counting objects:  72% (8/11)[Kremote: Counting objects:  81% (9/11)[Kremote: Counting objects:  90% (10/11)[Kremote: Counting objects: 100% (11/11)[Kremote: Counting objects: 100% (11/11), done.[K
+remote: Compressing objects:  50% (1/2)[Kremote: Compressing objects: 100% (2/2)[Kremote: Compressing objects: 100% (2/2), done.[K
+remote: Total 7 (delta 5), reused 7 (delta 5), pack-reused 0 (from 0)[K
+Unpacking objects:  14% (1/7)Unpacking objects:  28% (2/7)Unpacking objects:  42% (3/7)Unpacking objects:  57% (4/7)Unpacking objects:  71% (5/7)Unpacking objects:  85% (6/7)Unpacking objects: 100% (7/7)Unpacking objects: 100% (7/7), 836 bytes | 26.00 KiB/s, done.
+From github.com:theunfamiliar/roam-semantic-search
+   8640162..84f1c15  main       -> origin/main
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   git reset --hard origin/main
+[?2004lHEAD is now at 84f1c15 Update graph ingest script
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🧠 Checking for server.py..."
+[?2004l🧠 Checking for server.py...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   if [ ! -f server.py ]; then
+[?2004l[?2004h>     echo "❌ server.py not found"; exit 1
+[?2004l[?2004h>   fi
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🛑 Stopping systemd service (semantic-api.service)..."
+[?2004l🛑 Stopping systemd service (semantic-api.service)...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   systemctl stop semantic-api.service
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🔪 Killing any lingering uvicorn processes..."
+[?2004l🔪 Killing any lingering uvicorn processes...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   pkill -f uvicorn || true
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   sleep 2
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🔄 Verifying port 8000 is free..."
+[?2004l🔄 Verifying port 8000 is free...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   if lsof -i :8000; then
+[?2004l[?2004h>     echo "❌ Port 8000 still in use!"; exit 1
+[?2004l[?2004h>   else
+[?2004l[?2004h>     echo "✅ Port 8000 successfully cleared"
+[?2004l[?2004h>   fi
+[?2004l✅ Port 8000 successfully cleared
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🔄 Restarting API service..."
+[?2004l🔄 Restarting API service...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   systemctl start semantic-api.service
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🪵 Dumping last 30 log lines from semantic-api.service..."
+[?2004l🪵 Dumping last 30 log lines from semantic-api.service...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   journalctl -u semantic-api.service -n 30 --no-pager
+[?2004lMay 18 18:15:07 vmi2583988 uvicorn[724798]: INFO:     185.218.84.178:0 - "GET / HTTP/1.0" 200 OK
+May 18 18:15:55 vmi2583988 uvicorn[724798]: INFO:     139.59.153.68:0 - "GET /odinhttpcall1747566955 HTTP/1.0" 404 Not Found
+May 18 18:15:55 vmi2583988 uvicorn[724798]: INFO:     139.59.153.68:0 - "POST /sdk HTTP/1.0" 404 Not Found
+May 18 18:15:55 vmi2583988 uvicorn[724798]: INFO:     139.59.153.68:0 - "GET /evox/about HTTP/1.0" 404 Not Found
+May 18 18:15:55 vmi2583988 uvicorn[724798]: INFO:     139.59.153.68:0 - "GET /HNAP1 HTTP/1.0" 404 Not Found
+May 18 18:15:55 vmi2583988 uvicorn[724798]: INFO:     139.59.153.68:0 - "GET / HTTP/1.0" 200 OK
+May 18 18:15:55 vmi2583988 uvicorn[724798]: INFO:     167.172.99.113:0 - "GET /query?q=SHOW+DIAGNOSTICS HTTP/1.0" 404 Not Found
+May 18 18:15:55 vmi2583988 uvicorn[724798]: INFO:     207.154.230.169:0 - "GET /cgi-bin/authLogin.cgi HTTP/1.0" 404 Not Found
+May 18 18:15:55 vmi2583988 uvicorn[724798]: INFO:     165.227.157.217:0 - "GET / HTTP/1.0" 200 OK
+May 18 18:15:55 vmi2583988 uvicorn[724798]: INFO:     46.101.96.144:0 - "GET /v2/_catalog HTTP/1.0" 404 Not Found
+May 18 18:15:55 vmi2583988 uvicorn[724798]: INFO:     178.128.199.39:0 - "GET /solr/admin/info/system HTTP/1.0" 404 Not Found
+May 18 18:15:55 vmi2583988 uvicorn[724798]: INFO:     178.128.199.39:0 - "GET /solr/admin/cores?action=STATUS&wt=json HTTP/1.0" 404 Not Found
+May 18 18:15:56 vmi2583988 uvicorn[724798]: INFO:     159.65.2.115:0 - "GET /favicon.ico HTTP/1.0" 404 Not Found
+May 18 18:17:03 vmi2583988 uvicorn[724798]: INFO:     204.76.203.206:0 - "GET / HTTP/1.0" 200 OK
+May 18 18:27:42 vmi2583988 uvicorn[724798]: INFO:     204.76.203.208:0 - "GET / HTTP/1.0" 200 OK
+May 18 18:30:53 vmi2583988 uvicorn[724798]: INFO:     198.98.60.73:0 - "GET / HTTP/1.0" 200 OK
+May 18 18:35:27 vmi2583988 uvicorn[724798]: INFO:     205.210.31.182:0 - "GET / HTTP/1.0" 200 OK
+May 18 18:41:29 vmi2583988 uvicorn[724798]: INFO:     198.55.98.76:0 - "GET /.git/config HTTP/1.0" 404 Not Found
+May 18 18:45:27 vmi2583988 uvicorn[724798]: INFO:     159.65.132.103:0 - "GET /web HTTP/1.0" 404 Not Found
+May 18 18:45:28 vmi2583988 uvicorn[724798]: INFO:     159.65.132.103:0 - "GET /geoserver/web/ HTTP/1.0" 404 Not Found
+May 18 18:50:43 vmi2583988 systemd[1]: Stopping semantic-api.service - Semantic Search API (Roam)...
+May 18 18:50:44 vmi2583988 uvicorn[724798]: INFO:     Shutting down
+May 18 18:50:44 vmi2583988 uvicorn[724798]: INFO:     Waiting for application shutdown.
+May 18 18:50:44 vmi2583988 uvicorn[724798]: INFO:     Application shutdown complete.
+May 18 18:50:44 vmi2583988 uvicorn[724798]: INFO:     Finished server process [724798]
+May 18 18:50:44 vmi2583988 systemd[1]: semantic-api.service: Deactivated successfully.
+May 18 18:50:44 vmi2583988 systemd[1]: Stopped semantic-api.service - Semantic Search API (Roam).
+May 18 18:50:44 vmi2583988 systemd[1]: semantic-api.service: Consumed 4min 55.808s CPU time.
+May 18 18:50:46 vmi2583988 systemd[1]: Starting semantic-api.service - Semantic Search API (Roam)...
+May 18 18:50:46 vmi2583988 systemd[1]: Started semantic-api.service - Semantic Search API (Roam).
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "⏳ Waiting for API to boot..."
+[?2004l⏳ Waiting for API to boot...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   sleep 3
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "📡 Hitting root route..."
+[?2004l📡 Hitting root route...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   ROOT_OUTPUT=$(curl -s -w "\nHTTP_STATUS:%{http_code}" http://localhost:8000/)
+[?2004lConnection to 207.180.227.18 closed.

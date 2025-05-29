@@ -1,0 +1,72 @@
+▶️ Committing changes to GitHub...
+[main e62acf8] .
+ Committer: James Dunn <jamesdunn@Jamess-MacBook-Air-2.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 20 insertions(+), 4 deletions(-)
+To github.com:theunfamiliar/roam-semantic-search.git
+   789b6eb..e62acf8  main -> main
+🚀 SSHing into VPS and pulling latest code...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   set -e
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+[?2004l━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "📍 Connected to VPS - Starting Deploy"
+[?2004l📍 Connected to VPS - Starting Deploy
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+[?2004l━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   cd /root/roam-semantic-search
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "📦 Forcing latest from GitHub (reset)..."
+[?2004l📦 Forcing latest from GitHub (reset)...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   git fetch origin
+[?2004lremote: Enumerating objects: 5, done.[K
+remote: Counting objects:  20% (1/5)[Kremote: Counting objects:  40% (2/5)[Kremote: Counting objects:  60% (3/5)[Kremote: Counting objects:  80% (4/5)[Kremote: Counting objects: 100% (5/5)[Kremote: Counting objects: 100% (5/5), done.[K
+remote: Compressing objects: 100% (1/1)[Kremote: Compressing objects: 100% (1/1), done.[K
+remote: Total 3 (delta 2), reused 3 (delta 2), pack-reused 0 (from 0)[K
+Unpacking objects:  33% (1/3)Unpacking objects:  66% (2/3)Unpacking objects: 100% (3/3)Unpacking objects: 100% (3/3), 543 bytes | 38.00 KiB/s, done.
+From github.com:theunfamiliar/roam-semantic-search
+   789b6eb..e62acf8  main       -> origin/main
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   git reset --hard origin/main
+[?2004lHEAD is now at e62acf8 .
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🧠 Checking for server.py..."
+[?2004l🧠 Checking for server.py...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   if [ ! -f server.py ]; then
+[?2004l[?2004h>     echo "❌ server.py not found"; exit 1
+[?2004l[?2004h>   fi
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🛑 Releasing port 8000 if blocked..."
+[?2004l🛑 Releasing port 8000 if blocked...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   PID=$(lsof -ti:8000 || true)
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   if [ -n "$PID" ]; then
+[?2004l[?2004h>     echo "🔪 Killing process on port 8000 (PID: $PID)"
+[?2004l[?2004h>     kill -9 $PID || echo "⚠️ Failed to kill process $PID"
+[?2004l[?2004h>     sleep 2
+[?2004l[?2004h>     echo "🔄 Verifying port 8000 is free..."
+[?2004l[?2004h>     if lsof -i :8000; then
+[?2004l[?2004h>       echo "❌ Port 8000 still in use!"; exit 1
+[?2004l[?2004h>     else
+[?2004l[?2004h>       echo "✅ Port 8000 successfully cleared"
+[?2004l[?2004h>     fi
+[?2004l[?2004h>   else
+[?2004l[?2004h>     echo "✅ No process found on port 8000"
+[?2004l[?2004h>   fi
+[?2004l🔪 Killing process on port 8000 (PID: 720539)
+🔄 Verifying port 8000 is free...
+COMMAND    PID USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
+uvicorn 722853 root    7u  IPv4 4856630      0t0  TCP *:8000 (LISTEN)
+❌ Port 8000 still in use!
+exit
+Connection to 207.180.227.18 closed.

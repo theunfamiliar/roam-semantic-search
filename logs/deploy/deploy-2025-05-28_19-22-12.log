@@ -1,0 +1,77 @@
+▶️ Committing changes to GitHub...
+[main 07e141f] .
+ Committer: James Dunn <jamesdunn@192.168.100.10>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+To github.com:theunfamiliar/roam-semantic-search.git
+   449f5d5..07e141f  main -> main
+🚀 SSHing into VPS and pulling latest code...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   set -e
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+[?2004l━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "📍 Connected to VPS - Starting Deploy"
+[?2004l📍 Connected to VPS - Starting Deploy
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+[?2004l━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   cd /root/roam-semantic-search
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🔐 Making scripts executable..." [A
+[?2004l🔐 Making scripts executable...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   chmod +x ./scripts/*.sh
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "📦 Pulling latest from GitHub..."
+[?2004l📦 Pulling latest from GitHub...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   git fetch origin
+[?2004lremote: Enumerating objects: 5, done.[K
+remote: Counting objects:  20% (1/5)[Kremote: Counting objects:  40% (2/5)[Kremote: Counting objects:  60% (3/5)[Kremote: Counting objects:  80% (4/5)[Kremote: Counting objects: 100% (5/5)[Kremote: Counting objects: 100% (5/5), done.[K
+remote: Compressing objects: 100% (1/1)[Kremote: Compressing objects: 100% (1/1), done.[K
+remote: Total 3 (delta 2), reused 3 (delta 2), pack-reused 0 (from 0)[K
+Unpacking objects:  33% (1/3)Unpacking objects:  66% (2/3)Unpacking objects: 100% (3/3)Unpacking objects: 100% (3/3), 379 bytes | 126.00 KiB/s, done.
+From github.com:theunfamiliar/roam-semantic-search
+   449f5d5..07e141f  main       -> origin/main
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   git reset --hard origin/main
+[?2004lHEAD is now at 07e141f .
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🧠 Checking for server.py..."
+[?2004l🧠 Checking for server.py...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   if [ ! -f server.py ]; then
+[?2004l[?2004h>     echo "❌ server.py not found"; exit 1
+[?2004l[?2004h>   fi
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🛑 Stopping API service..."
+[?2004l🛑 Stopping API service...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   systemctl stop semantic-api.service
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   pkill -f uvicorn || true
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   sleep 2
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🔄 Checking port 8000..."
+[?2004l🔄 Checking port 8000...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   if lsof -i :8000; then
+[?2004l[?2004h>     echo "❌ Port 8000 in use"; exit 1
+[?2004l[?2004h>   else
+[?2004l[?2004h>     echo "✅ Port 8000 is free"
+[?2004l[?2004h>   fi
+[?2004l✅ Port 8000 is free
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🔁 Restarting API service..."
+[?2004l🔁 Restarting API service...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   systemctl start semantic-api.service
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search# 
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   echo "🧾 Checking root route..."
+[?2004l🧾 Checking root route...
+[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   sleep 3
+[?2004l[?2004h]0;root@vmi2583988: ~/roam-semantic-searchroot@vmi2583988:~/roam-semantic-search#   ROOT_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/)
+[?2004lConnection to 207.180.227.18 closed.

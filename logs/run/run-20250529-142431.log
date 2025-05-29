@@ -1,0 +1,78 @@
+Starting application in rebuild mode...
+Logging to: logs/run/run-20250529-142431.log
+🔨 Rebuilding and restarting...
+Stopping any existing containers...
+Rebuilding and starting containers...
+Compose can now delegate builds to bake for better performance.
+ To do so, set COMPOSE_BAKE=true.
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [app internal] load build definition from Dockerfile
+#1 transferring dockerfile: 772B done
+#1 DONE 0.0s
+
+#2 [app internal] load metadata for docker.io/library/python:3.11-bullseye
+#2 DONE 1.2s
+
+#3 [app internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [app 1/8] FROM docker.io/library/python:3.11-bullseye@sha256:3967a8568b104996ffc8f4d455fc75d11c3ac2cfe6a9e173e3b1297998656ba2
+#4 resolve docker.io/library/python:3.11-bullseye@sha256:3967a8568b104996ffc8f4d455fc75d11c3ac2cfe6a9e173e3b1297998656ba2 0.0s done
+#4 DONE 0.0s
+
+#5 [app internal] load build context
+#5 transferring context: 5.05MB 1.7s done
+#5 DONE 1.7s
+
+#6 [app 3/8] WORKDIR /app
+#6 CACHED
+
+#7 [app 4/8] COPY requirements.txt .
+#7 CACHED
+
+#8 [app 5/8] RUN pip install --upgrade pip
+#8 CACHED
+
+#9 [app 2/8] RUN apt-get update && apt-get install -y     build-essential     curl     git     libopenblas-dev     libomp-dev     ffmpeg     && rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [app 6/8] RUN pip install --no-cache-dir -r requirements.txt
+#10 CACHED
+
+#11 [app 7/8] COPY . .
+#11 DONE 2.6s
+
+#12 [app 8/8] RUN mkdir -p /app/logs/{server,deploy,audit,performance,data,search} &&     chmod -R 755 /app/logs
+#12 DONE 0.2s
+
+#13 [app] exporting to image
+#13 exporting layers
+#13 exporting layers 14.0s done
+#13 exporting manifest sha256:5fddc3b79aae94bdd58b98623828871787592a92f39e2211e138ab2a14d77fdb 0.0s done
+#13 exporting config sha256:0c64d1f6a9f41796c281a1f80f4ffe565dffb6acfc742d09d805a8f23368d3f4 done
+#13 exporting attestation manifest sha256:173e2d76b0e21ace8a8f447399cb0cc2915b272df9b5f1c0d42e66f6b12acd16 done
+#13 exporting manifest list sha256:0e689e57e591bf5f17d8fabcb6a4e3089382614338a9e1a7cc87adf43c627ef6 done
+#13 naming to docker.io/library/roam-semantic-search-app:latest done
+#13 unpacking to docker.io/library/roam-semantic-search-app:latest
+#13 unpacking to docker.io/library/roam-semantic-search-app:latest 3.0s done
+#13 DONE 17.0s
+
+#14 [app] resolving provenance for metadata file
+#14 DONE 0.0s
+ app  Built
+ Network roam-semantic-search_default  Creating
+ Network roam-semantic-search_default  Created
+ Container roam-semantic-search-app-1  Creating
+ Container roam-semantic-search-certbot-1  Creating
+ Container roam-semantic-search-app-1  Created
+ Container roam-semantic-search-nginx-1  Creating
+ Container roam-semantic-search-certbot-1  Created
+ Container roam-semantic-search-nginx-1  Created
+ Container roam-semantic-search-app-1  Starting
+ Container roam-semantic-search-certbot-1  Starting
+ Container roam-semantic-search-app-1  Started
+ Container roam-semantic-search-nginx-1  Starting
+ Container roam-semantic-search-certbot-1  Started
+ Container roam-semantic-search-nginx-1  Started

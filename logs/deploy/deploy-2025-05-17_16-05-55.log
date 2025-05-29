@@ -1,0 +1,66 @@
+▶️ Committing changes to GitHub...
+[main a6bc30e] .
+ Committer: James Dunn <jamesdunn@Jamess-MacBook-Air-2.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+To github.com:theunfamiliar/roam-semantic-search.git
+   f546778..a6bc30e  main -> main
+🚀 SSHing into VPS and pulling latest code...
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📍 Connected to VPS - Starting Deploy
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 Forcing latest from GitHub (reset)...
+HEAD is now at a6bc30e .
+🧠 Checking for server.py...
+🛑 Releasing port 8000 if blocked...
+From github.com:theunfamiliar/roam-semantic-search
+   f546778..a6bc30e  main       -> origin/main
+🔪 Killing process on port 8000 (PID: 712862)
+🔄 Verifying port 8000 is free...
+✅ Port 8000 successfully cleared
+🔄 Restarting API service...
+🪵 Dumping last 30 log lines from semantic-api.service...
+May 17 16:05:50 vmi2583988 systemd[1]: semantic-api.service: Main process exited, code=exited, status=1/FAILURE
+May 17 16:05:50 vmi2583988 systemd[1]: semantic-api.service: Failed with result 'exit-code'.
+May 17 16:05:50 vmi2583988 systemd[1]: semantic-api.service: Consumed 12.202s CPU time.
+May 17 16:05:54 vmi2583988 systemd[1]: semantic-api.service: Scheduled restart job, restart counter is at 32.
+May 17 16:05:54 vmi2583988 systemd[1]: Starting semantic-api.service - Semantic Search API (Roam)...
+May 17 16:05:54 vmi2583988 systemd[1]: Started semantic-api.service - Semantic Search API (Roam).
+May 17 16:06:05 vmi2583988 uvicorn[713282]: INFO:     Started server process [713282]
+May 17 16:06:05 vmi2583988 uvicorn[713282]: INFO:     Waiting for application startup.
+May 17 16:06:05 vmi2583988 uvicorn[713282]: INFO:     Application startup complete.
+May 17 16:06:05 vmi2583988 uvicorn[713282]: ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 8000): address already in use
+May 17 16:06:05 vmi2583988 uvicorn[713282]: INFO:     Waiting for application shutdown.
+May 17 16:06:05 vmi2583988 uvicorn[713282]: INFO:     Application shutdown complete.
+May 17 16:06:05 vmi2583988 uvicorn[713282]: 🔍 Registered routes:
+May 17 16:06:05 vmi2583988 uvicorn[713282]:   /openapi.json -> openapi (GET,HEAD)
+May 17 16:06:05 vmi2583988 uvicorn[713282]:   /docs -> swagger_ui_html (GET,HEAD)
+May 17 16:06:05 vmi2583988 uvicorn[713282]:   /docs/oauth2-redirect -> swagger_ui_redirect (GET,HEAD)
+May 17 16:06:05 vmi2583988 uvicorn[713282]:   /redoc -> redoc_html (GET,HEAD)
+May 17 16:06:05 vmi2583988 uvicorn[713282]:   / -> root (GET)
+May 17 16:06:05 vmi2583988 uvicorn[713282]:   /ping -> ping (GET)
+May 17 16:06:05 vmi2583988 uvicorn[713282]:   /docs -> docs_redirect (GET)
+May 17 16:06:05 vmi2583988 uvicorn[713282]:   /semantic -> semantic_entrypoint (POST)
+May 17 16:06:05 vmi2583988 uvicorn[713282]:   /search -> legacy_search (POST)
+May 17 16:06:05 vmi2583988 uvicorn[713282]:   /reindex -> reindex (POST)
+May 17 16:06:06 vmi2583988 systemd[1]: semantic-api.service: Main process exited, code=exited, status=1/FAILURE
+May 17 16:06:06 vmi2583988 systemd[1]: semantic-api.service: Failed with result 'exit-code'.
+May 17 16:06:06 vmi2583988 systemd[1]: semantic-api.service: Consumed 13.109s CPU time.
+May 17 16:06:07 vmi2583988 systemd[1]: Stopped semantic-api.service - Semantic Search API (Roam).
+May 17 16:06:07 vmi2583988 systemd[1]: semantic-api.service: Consumed 13.109s CPU time.
+May 17 16:06:07 vmi2583988 systemd[1]: Starting semantic-api.service - Semantic Search API (Roam)...
+May 17 16:06:07 vmi2583988 systemd[1]: Started semantic-api.service - Semantic Search API (Roam).
+⏳ Waiting for API to boot...
+📡 Hitting root route...

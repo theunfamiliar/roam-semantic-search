@@ -1,0 +1,131 @@
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  standard:
+    format: '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+  json:
+    (): pythonjsonlogger.jsonlogger.JsonFormatter
+    format: '%(asctime)s %(levelname)s %(name)s %(message)s %(filename)s %(funcName)s %(lineno)d %(process)d %(thread)d'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: standard
+    stream: ext://sys.stdout
+
+  server_file:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: json
+    filename: logs/server/app.log
+    when: midnight
+    interval: 1
+    backupCount: 30
+    encoding: utf8
+
+  deploy_file:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: json
+    filename: logs/deploy/deploy.log
+    when: midnight
+    interval: 1
+    backupCount: 90
+    encoding: utf8
+
+  error_file:
+    class: logging.handlers.RotatingFileHandler
+    level: ERROR
+    formatter: json
+    filename: logs/server/error.log
+    maxBytes: 10485760  # 10MB
+    backupCount: 20
+    encoding: utf8
+
+  audit_file:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: json
+    filename: logs/audit/audit.log
+    when: midnight
+    interval: 1
+    backupCount: 365  # Keep one year of audit logs
+    encoding: utf8
+
+  performance_file:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    formatter: json
+    filename: logs/performance/perf.log
+    maxBytes: 10485760  # 10MB
+    backupCount: 20
+    encoding: utf8
+
+  data_file:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: json
+    filename: logs/data/operations.log
+    when: midnight
+    interval: 1
+    backupCount: 30
+    encoding: utf8
+
+  search_file:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: json
+    filename: logs/search/queries.log
+    when: midnight
+    interval: 1
+    backupCount: 30
+    encoding: utf8
+
+loggers:
+  app:  # Base application logger
+    level: INFO
+    handlers: [console, server_file, error_file]
+    propagate: false
+
+  app.deploy:  # Deployment related logging
+    level: INFO
+    handlers: [console, deploy_file]
+    propagate: false
+
+  app.audit:  # Security and access logging
+    level: INFO
+    handlers: [audit_file]
+    propagate: false
+
+  app.perf:  # Performance logging
+    level: INFO
+    handlers: [performance_file]
+    propagate: false
+
+  app.data:  # Data operations (file/export handling)
+    level: INFO
+    handlers: [data_file, error_file]
+    propagate: false
+
+  app.search:  # Search operations (FAISS/embeddings)
+    level: INFO
+    handlers: [search_file, error_file]
+    propagate: false
+
+  uvicorn:  # Web server logging
+    level: INFO
+    handlers: [console, server_file]
+    propagate: false
+
+  fastapi:  # Framework logging
+    level: INFO
+    handlers: [console, server_file]
+    propagate: false
+
+root:  # Root logger
+  level: INFO
+  handlers: [console, error_file] 

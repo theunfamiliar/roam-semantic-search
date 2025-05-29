@@ -1,0 +1,11 @@
+▶️ Committing changes to GitHub...
+On branch main
+Your branch is ahead of 'origin/main' by 5 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+⚠️ Nothing to commit.
+🔄 Checking for uncommitted changes... ✅ Clean.
+🔐 Checking for .env file... ❌ Missing .env
+🚫 Pre-deploy checks failed. Push aborted.
+error: failed to push some refs to 'github.com:theunfamiliar/roam-semantic-search.git'

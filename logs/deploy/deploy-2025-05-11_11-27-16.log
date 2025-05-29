@@ -1,0 +1,64 @@
+▶️ Committing changes to GitHub...
+[main b049cfb] 🔁 Test port 8000 release
+ Committer: James Dunn <jamesdunn@192.168.10.2>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 1 insertion(+)
+To github.com:theunfamiliar/roam-semantic-search.git
+   25254c0..b049cfb  main -> main
+🚀 SSHing into VPS and pulling latest code...
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📍 Connected to VPS - Starting Deploy
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 Forcing latest from GitHub (reset)...
+From github.com:theunfamiliar/roam-semantic-search
+   25254c0..b049cfb  main       -> origin/main
+HEAD is now at b049cfb 🔁 Test port 8000 release
+🧠 Checking for server.py...
+🛑 Releasing port 8000 if blocked...
+ 2803358000/tcp:           
+🔄 Restarting API service...
+🪵 Dumping last 30 log lines from semantic-api.service...
+May 11 11:26:21 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /zend/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:21 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /ws/ec/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:22 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /V2/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:23 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /tests/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:24 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /test/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:25 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /testing/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:27 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /api/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:27 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /demo/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:28 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /cms/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:28 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /crm/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:29 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /admin/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:29 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /backup/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:31 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /blog/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:31 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /workspace/drupal/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:31 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /panel/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:32 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /public/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:32 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /apps/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:32 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /app/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 404 Not Found
+May 11 11:26:34 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /index.php?s=/index/\think\app/invokefunction&function=call_user_func_array&vars[0]=md5&vars[1][]=Hello HTTP/1.0" 404 Not Found
+May 11 11:26:34 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /public/index.php?s=/index/\think\app/invokefunction&function=call_user_func_array&vars[0]=md5&vars[1][]=Hello HTTP/1.0" 404 Not Found
+May 11 11:26:35 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /index.php?lang=../../../../../../../../usr/local/lib/php/pearcmd&+config-create+/&/<?echo(md5("hi"));?>+/tmp/index1.php HTTP/1.0" 404 Not Found
+May 11 11:26:35 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /index.php?lang=../../../../../../../../tmp/index1 HTTP/1.0" 404 Not Found
+May 11 11:26:37 vmi2583988 uvicorn[280335]: INFO:     182.40.36.96:0 - "GET /containers/json HTTP/1.0" 404 Not Found
+May 11 11:27:24 vmi2583988 systemd[1]: semantic-api.service: Main process exited, code=killed, status=9/KILL
+May 11 11:27:24 vmi2583988 systemd[1]: semantic-api.service: Failed with result 'signal'.
+May 11 11:27:24 vmi2583988 systemd[1]: semantic-api.service: Consumed 15.226s CPU time.
+May 11 11:27:26 vmi2583988 systemd[1]: Stopped semantic-api.service - Semantic Search API (Roam).
+May 11 11:27:26 vmi2583988 systemd[1]: semantic-api.service: Consumed 15.226s CPU time.
+May 11 11:27:26 vmi2583988 systemd[1]: Starting semantic-api.service - Semantic Search API (Roam)...
+May 11 11:27:26 vmi2583988 systemd[1]: Started semantic-api.service - Semantic Search API (Roam).
+⏳ Waiting for API to boot...
+📡 Hitting root route...

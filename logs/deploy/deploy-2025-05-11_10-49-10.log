@@ -1,0 +1,50 @@
+▶️ Committing changes to GitHub...
+On branch main
+nothing to commit, working tree clean
+⚠️ Nothing to commit.
+To github.com:theunfamiliar/roam-semantic-search.git
+   a9d6755..b56a250  main -> main
+🚀 SSHing into VPS and pulling latest code...
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📍 Connected to VPS - Starting Deploy
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 Forcing latest from GitHub (reset)...
+From github.com:theunfamiliar/roam-semantic-search
+   a9d6755..b56a250  main       -> origin/main
+HEAD is now at b56a250 🔐 Add rate limiting, top_k validation, and env-based auth
+🧠 Checking for server.py...
+🔄 Restarting API service...
+🪵 Dumping last 30 log lines from semantic-api.service...
+May 11 10:49:15 vmi2583988 uvicorn[278414]:     self.loaded_app = import_from_string(self.app)
+May 11 10:49:15 vmi2583988 uvicorn[278414]:                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+May 11 10:49:15 vmi2583988 uvicorn[278414]:   File "/root/roam-semantic-search/venv/lib/python3.12/site-packages/uvicorn/importer.py", line 22, in import_from_string
+May 11 10:49:15 vmi2583988 uvicorn[278414]:     raise exc from None
+May 11 10:49:15 vmi2583988 uvicorn[278414]:   File "/root/roam-semantic-search/venv/lib/python3.12/site-packages/uvicorn/importer.py", line 19, in import_from_string
+May 11 10:49:15 vmi2583988 uvicorn[278414]:     module = importlib.import_module(module_str)
+May 11 10:49:15 vmi2583988 uvicorn[278414]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+May 11 10:49:15 vmi2583988 uvicorn[278414]:   File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+May 11 10:49:15 vmi2583988 uvicorn[278414]:     return _bootstrap._gcd_import(name[level:], package, level)
+May 11 10:49:15 vmi2583988 uvicorn[278414]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+May 11 10:49:15 vmi2583988 uvicorn[278414]:   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+May 11 10:49:15 vmi2583988 uvicorn[278414]:   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+May 11 10:49:15 vmi2583988 uvicorn[278414]:   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+May 11 10:49:15 vmi2583988 uvicorn[278414]:   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+May 11 10:49:15 vmi2583988 uvicorn[278414]:   File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+May 11 10:49:15 vmi2583988 uvicorn[278414]:   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+May 11 10:49:15 vmi2583988 uvicorn[278414]:   File "/root/roam-semantic-search/server.py", line 8, in <module>
+May 11 10:49:15 vmi2583988 uvicorn[278414]:     import httpx
+May 11 10:49:15 vmi2583988 uvicorn[278414]: ModuleNotFoundError: No module named 'httpx'
+May 11 10:49:17 vmi2583988 systemd[1]: semantic-api.service: Main process exited, code=exited, status=1/FAILURE
+May 11 10:49:17 vmi2583988 systemd[1]: semantic-api.service: Failed with result 'exit-code'.
+May 11 10:49:17 vmi2583988 systemd[1]: semantic-api.service: Consumed 16.571s CPU time.
+May 11 10:49:20 vmi2583988 systemd[1]: semantic-api.service: Scheduled restart job, restart counter is at 103.
+May 11 10:49:20 vmi2583988 systemd[1]: Starting semantic-api.service - Semantic Search API (Roam)...
+May 11 10:49:20 vmi2583988 systemd[1]: Started semantic-api.service - Semantic Search API (Roam).
+May 11 10:49:20 vmi2583988 systemd[1]: Stopping semantic-api.service - Semantic Search API (Roam)...
+May 11 10:49:20 vmi2583988 systemd[1]: semantic-api.service: Deactivated successfully.
+May 11 10:49:20 vmi2583988 systemd[1]: Stopped semantic-api.service - Semantic Search API (Roam).
+May 11 10:49:20 vmi2583988 systemd[1]: Starting semantic-api.service - Semantic Search API (Roam)...
+May 11 10:49:20 vmi2583988 systemd[1]: Started semantic-api.service - Semantic Search API (Roam).
+⏳ Waiting for API to boot...
+📡 Hitting root route...
