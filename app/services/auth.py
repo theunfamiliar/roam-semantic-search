@@ -35,7 +35,7 @@ async def authenticate(credentials: Optional[HTTPAuthorizationCredentials] = Dep
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    correct_token = os.getenv("API_TOKEN", "test-token")
+    correct_token = os.getenv("ADMIN_TOKEN", "admin-test-token")
     
     is_token_correct = secrets.compare_digest(
         credentials.credentials.encode("utf8"),
