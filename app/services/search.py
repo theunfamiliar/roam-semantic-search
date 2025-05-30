@@ -24,13 +24,18 @@ def get_model() -> SentenceTransformer:
         _model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
     return _model
 
+def normalize_vectors(vectors: np.ndarray) -> np.ndarray:
+    """Normalize vectors to unit length for cosine similarity."""
+    norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+    return vectors / norms
+
 def normalize_score(score: float) -> float:
     """
-    Normalize the FAISS L2 distance to a similarity score between 0 and 1.
-    Lower L2 distance means higher similarity.
+    Normalize the inner product score to a similarity score between 0 and 1.
+    Since vectors are normalized, inner product is already cosine similarity (-1 to 1).
+    We rescale it to 0 to 1 range.
     """
-    # FAISS L2 distance can be quite large, so we use a sigmoid-like normalization
-    return 1 / (1 + score/100)
+    return (score + 1) / 2
 
 async def search(request: SearchRequest) -> List[SearchResult]:
     """
@@ -70,17 +75,20 @@ async def search(request: SearchRequest) -> List[SearchResult]:
         query_text = request.query.strip()
         embedding = model.encode(query_text, convert_to_numpy=True)
         
+        # Normalize query vector for cosine similarity
+        embedding = normalize_vectors(np.array([embedding]))[0]
+        
         # Search
         D, I = index.search(np.array([embedding]).astype('float32'), request.top_k)
         
         # Convert results
         results = []
-        for distance, idx in zip(D[0], I[0]):
+        for score, idx in zip(D[0], I[0]):
             if idx < len(metadata):  # Safety check
                 meta = metadata[idx]
                 result = SearchResult(
                     content=meta["content"],
-                    score=normalize_score(float(distance)),  # Convert L2 distance to similarity score
+                    score=normalize_score(float(score)),  # Convert cosine similarity to 0-1 range
                     brain=request.brain,
                     metadata={"uid": meta.get("uid", str(uuid.uuid4()))}
                 )

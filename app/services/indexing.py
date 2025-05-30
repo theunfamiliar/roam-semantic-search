@@ -16,6 +16,11 @@ import os
 
 logger = logging.getLogger(__name__)
 
+def normalize_vectors(vectors: np.ndarray) -> np.ndarray:
+    """Normalize vectors to unit length for cosine similarity."""
+    norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+    return vectors / norms
+
 async def process_references(refs: List[List[Any]], processed_uids: Set[str]) -> List[Dict[str, Any]]:
     """
     Process block references into a standardized format.
@@ -71,7 +76,10 @@ async def create_embeddings(blocks: List[Dict[str, Any]], brain: str) -> tuple[n
                 "brain": brain
             })
     
-    return np.array(embeddings).astype('float32'), metadata
+    embeddings_array = np.array(embeddings).astype('float32')
+    # Normalize vectors for cosine similarity
+    normalized_embeddings = normalize_vectors(embeddings_array)
+    return normalized_embeddings, metadata
 
 async def reindex_brain(brain: str) -> Dict[str, Any]:
     """
@@ -129,7 +137,8 @@ async def reindex_brain(brain: str) -> Dict[str, Any]:
         # Create and save FAISS index
         logger.info("Creating FAISS index")
         dimension = embeddings.shape[1]
-        index = faiss.IndexFlatL2(dimension)
+        # Use IndexFlatIP for inner product (cosine similarity with normalized vectors)
+        index = faiss.IndexFlatIP(dimension)
         index.add(embeddings)
         
         # Save index and metadata
