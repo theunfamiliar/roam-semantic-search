@@ -12,6 +12,7 @@ import argparse
 import logging
 from app.services.indexing import reindex_brain
 from app.utils.logging import setup_logging
+from app.config import BRAINS
 
 # Set up logging
 setup_logging()
@@ -20,8 +21,8 @@ logger = logging.getLogger(__name__)
 async def main():
     """Main function to run reindexing."""
     parser = argparse.ArgumentParser(description="Reindex a brain")
-    parser.add_argument("--brain", type=str, required=True, choices=["ideas", "work"],
-                      help="Brain to reindex (ideas or work)")
+    parser.add_argument("--brain", type=str, required=True, choices=BRAINS,
+                      help=f"Brain to reindex (one of: {', '.join(BRAINS)})")
     args = parser.parse_args()
     
     try:

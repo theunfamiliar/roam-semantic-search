@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 import os
+from typing import List, Dict
 
 # Load environment variables
 load_dotenv()
@@ -37,8 +38,22 @@ os.makedirs(LOGS_DIR, exist_ok=True)
 # CORS Configuration
 CORS_ORIGINS = ["https://roamresearch.com"]
 
-def get_filenames(brain: str) -> dict:
-    """Get the paths for brain-specific files."""
+# Available Brains
+BRAINS: List[str] = ["ideas", "marketing"]
+
+def get_filenames(brain: str) -> Dict[str, str]:
+    """
+    Get the paths for brain-specific files.
+    
+    Args:
+        brain: Name of the brain (must be one of BRAINS)
+        
+    Returns:
+        Dict containing paths for index and metadata files
+    """
+    if brain not in BRAINS:
+        raise ValueError(f"Invalid brain: {brain}. Must be one of {BRAINS}")
+        
     return {
         "index": f"{DATA_DIR}/index_{brain}.faiss",
         "meta": f"{DATA_DIR}/metadata_{brain}.json"

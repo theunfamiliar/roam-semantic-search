@@ -2,6 +2,10 @@
 
 from pydantic import BaseModel, Field
 from typing import List, Optional, Literal
+from app.config import BRAINS
+
+# Create a Literal type from the BRAINS list
+BrainLiteral = Literal[tuple(BRAINS)]  # type: ignore
 
 class HealthResponse(BaseModel):
     """Health check response."""
@@ -10,14 +14,14 @@ class HealthResponse(BaseModel):
 class SearchRequest(BaseModel):
     """Search request model."""
     query: str = Field(..., min_length=1, example="project management")
-    brain: Literal["ideas", "marketing"] = Field(..., example="marketing")
+    brain: BrainLiteral = Field(..., example="marketing")
     top_k: Optional[int] = Field(default=5, gt=0, le=100)
 
 class SearchResult(BaseModel):
     """Single search result."""
     content: str = Field(..., example="Meeting notes about project timeline")
     score: float = Field(..., example=0.89)
-    brain: Literal["ideas", "marketing"] = Field(..., example="marketing")
+    brain: BrainLiteral = Field(..., example="marketing")
     metadata: dict = Field(default_factory=dict)
 
 class SearchResponse(BaseModel):
@@ -28,7 +32,7 @@ class SearchResponse(BaseModel):
 
 class ReindexRequest(BaseModel):
     """Reindex request model."""
-    brain: Literal["ideas", "marketing"] = Field(..., example="marketing")
+    brain: BrainLiteral = Field(..., example="marketing")
 
 class ReindexResponse(BaseModel):
     """Reindex response model."""
