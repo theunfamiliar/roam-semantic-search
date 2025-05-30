@@ -10,7 +10,7 @@ import logging
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
-@router.post("")
+@router.post("/search")
 async def search_endpoint(request: SearchRequest, auth: bool = Depends(authenticate)) -> SearchResponse:
     """
     Search endpoint.

@@ -14,7 +14,7 @@ from datetime import datetime
 from fastapi.testclient import TestClient
 from httpx import ASGITransport
 
-from app.main import app
+from app.server import app
 from app.models.search import SearchResult
 from app.services.search import get_model
 

@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
-@router.post("")
+@router.post("/reindex")
 async def reindex_endpoint(auth: bool = Depends(authenticate)) -> ReindexResponse:
     """
     Reindex both brains (ideas and work) from Roam API data.

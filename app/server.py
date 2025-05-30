@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import search, reindex
+from app.routes import search, reindex, health
 from app.config import API_TITLE, API_VERSION, CORS_ORIGINS
 from app.utils.logging import setup_logging
 
@@ -23,10 +23,11 @@ app.add_middleware(
 )
 
 # Include routers
-app.include_router(search.router, tags=["search"])
-app.include_router(reindex.router, tags=["reindex"])
+app.include_router(search.router, prefix="/api/v1", tags=["search"])
+app.include_router(reindex.router, prefix="/api/v1", tags=["reindex"])
+app.include_router(health.router, prefix="/api/v1", tags=["health"])
 
-# Health check endpoints
+# Root health check endpoint
 @app.get("/", tags=["health"])
 async def root():
     return {"status": "running"}
