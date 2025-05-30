@@ -8,8 +8,7 @@ import os
 from sentence_transformers import SentenceTransformer, util
 from typing import List, Dict, Any
 from app.config import get_filenames
-from app.models.search import SearchRequest, SearchResult
-from app.models.api import SearchResult
+from app.models.api import SearchRequest, SearchResult
 import uuid
 
 logger = logging.getLogger(__name__)
@@ -24,6 +23,14 @@ def get_model() -> SentenceTransformer:
         # Download and cache the model
         _model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
     return _model
+
+def normalize_score(score: float) -> float:
+    """
+    Normalize the FAISS L2 distance to a similarity score between 0 and 1.
+    Lower L2 distance means higher similarity.
+    """
+    # FAISS L2 distance can be quite large, so we use a sigmoid-like normalization
+    return 1 / (1 + score/100)
 
 async def search(request: SearchRequest) -> List[SearchResult]:
     """
@@ -68,11 +75,16 @@ async def search(request: SearchRequest) -> List[SearchResult]:
         
         # Convert results
         results = []
-        for score, idx in zip(D[0], I[0]):
+        for distance, idx in zip(D[0], I[0]):
             if idx < len(metadata):  # Safety check
-                result_dict = metadata[idx]
-                result_dict["score"] = float(score)  # Add distance score
-                results.append(SearchResult(**result_dict))
+                meta = metadata[idx]
+                result = SearchResult(
+                    content=meta["content"],
+                    score=normalize_score(float(distance)),  # Convert L2 distance to similarity score
+                    brain=request.brain,
+                    metadata={"uid": meta.get("uid", str(uuid.uuid4()))}
+                )
+                results.append(result)
                 
         return results
         
@@ -103,22 +115,10 @@ class SearchService:
         Returns:
             Dict containing search results
         """
-        # For testing purposes, return mock results
-        mock_results = [
-            SearchResult(
-                content=f"Mock result {i} for query: {query}",
-                score=0.9 - (i * 0.1),
-                brain=brain,
-                metadata={
-                    "source": f"test_{i}",
-                    "uid": str(uuid.uuid4())  # Add unique ID
-                }
-            )
-            for i in range(min(3, top_k))
-        ]
-        
+        request = SearchRequest(query=query, brain=brain, top_k=top_k)
+        results = await search(request)
         return {
             "query": query,
-            "results": mock_results,
-            "count": len(mock_results)
+            "results": results,
+            "count": len(results)
         } 

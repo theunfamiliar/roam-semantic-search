@@ -1,7 +1,7 @@
 """Search routes."""
 
 from fastapi import APIRouter, HTTPException, Depends
-from app.models.search import SearchRequest, SearchResult, SearchResponse
+from app.models.api import SearchRequest, SearchResult, SearchResponse
 from app.services.search import search
 from app.services.auth import authenticate
 from typing import List
