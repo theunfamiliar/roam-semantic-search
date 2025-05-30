@@ -8,9 +8,21 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 
 cd /root/roam-semantic-search
 
+# Store the current git hash and file hashes
+OLD_GIT_HASH=$(git rev-parse HEAD)
+OLD_REQ_HASH=$(md5sum requirements.txt 2>/dev/null || echo "none")
+OLD_DOCKER_HASH=$(md5sum Dockerfile 2>/dev/null || echo "none")
+OLD_COMPOSE_HASH=$(md5sum docker-compose.yml docker-compose.*.yml 2>/dev/null | sort | md5sum || echo "none")
+
 echo "📦 Pulling latest from GitHub..."
 git fetch origin
 git reset --hard origin/main
+
+# Get new hashes
+NEW_GIT_HASH=$(git rev-parse HEAD)
+NEW_REQ_HASH=$(md5sum requirements.txt 2>/dev/null || echo "none")
+NEW_DOCKER_HASH=$(md5sum Dockerfile 2>/dev/null || echo "none")
+NEW_COMPOSE_HASH=$(md5sum docker-compose.yml docker-compose.*.yml 2>/dev/null | sort | md5sum || echo "none")
 
 echo "🔐 Making scripts executable..."
 chmod +x start.sh stop.sh restart.sh setup.sh
@@ -30,8 +42,36 @@ if ! docker info &> /dev/null; then
     echo "✅ Docker is now running"
 fi
 
-echo "🔨 Rebuilding and restarting containers..."
-./restart.sh rebuild
+# Determine if we need to rebuild
+NEED_REBUILD=0
+if [ "$OLD_REQ_HASH" != "$NEW_REQ_HASH" ]; then
+    echo "📦 Requirements.txt changed - rebuild needed"
+    NEED_REBUILD=1
+fi
+
+if [ "$OLD_DOCKER_HASH" != "$NEW_DOCKER_HASH" ]; then
+    echo "🐳 Dockerfile changed - rebuild needed"
+    NEED_REBUILD=1
+fi
+
+if [ "$OLD_COMPOSE_HASH" != "$NEW_COMPOSE_HASH" ]; then
+    echo "🔄 Docker Compose configuration changed - rebuild needed"
+    NEED_REBUILD=1
+fi
+
+# Check if any Python files changed
+if git diff --name-only $OLD_GIT_HASH $NEW_GIT_HASH | grep -q "\.py$"; then
+    echo "🐍 Python files changed - rebuild needed"
+    NEED_REBUILD=1
+fi
+
+if [ $NEED_REBUILD -eq 1 ]; then
+    echo "🔨 Changes detected - Rebuilding containers..."
+    ./restart.sh rebuild
+else
+    echo "✨ No significant changes detected - Restarting without rebuild..."
+    ./restart.sh
+fi
 
 echo "⏳ Waiting for API to boot..."
 attempts=0

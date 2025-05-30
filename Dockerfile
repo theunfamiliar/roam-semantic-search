@@ -15,14 +15,24 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
+# Install Python dependencies first (this layer will be cached unless requirements.txt changes)
 COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-COPY . .
-
-# Create log directories with appropriate permissions
+# Create log directories (this layer will be cached)
 RUN mkdir -p /app/logs/{server,deploy,audit,performance,data,search} && \
     chmod -R 755 /app/logs
+
+# Copy configuration files first (changes less frequently)
+COPY config/ ./config/
+COPY scripts/ ./scripts/
+
+# Copy the rest of the application code (changes most frequently)
+COPY . .
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/ping || exit 1
 
 CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "8000", "--log-config", "config/logging.yaml"]
