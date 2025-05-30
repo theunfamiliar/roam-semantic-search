@@ -18,6 +18,15 @@ audit_handler.setFormatter(
 )
 audit_logger.addHandler(audit_handler)
 
+# Add debug logging
+debug_logger = logging.getLogger("debug")
+debug_logger.setLevel(logging.DEBUG)
+debug_handler = logging.StreamHandler()
+debug_handler.setFormatter(
+    logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+)
+debug_logger.addHandler(debug_handler)
+
 class SecurityService:
     """Service for handling security-related functionality."""
     
@@ -25,6 +34,7 @@ class SecurityService:
         self.admin_tokens: Set[str] = {os.getenv("ADMIN_TOKEN", "admin-test-token")}
         self.marketing_tokens: Set[str] = {os.getenv("MARKETING_TOKEN", "marketing-test-token")}
         self.security = HTTPBearer(auto_error=False)
+        debug_logger.debug(f"Initialized SecurityService with admin tokens: {self.admin_tokens}")
     
     async def validate_token(
         self, 
@@ -46,7 +56,10 @@ class SecurityService:
         """
         # Check for Authorization header
         auth_header = request.headers.get("Authorization")
+        debug_logger.debug(f"Received Authorization header: {auth_header}")
+        
         if not auth_header:
+            debug_logger.debug("No Authorization header found")
             raise HTTPException(
                 status_code=401,
                 detail="Not authenticated",
@@ -55,7 +68,10 @@ class SecurityService:
 
         # Check authentication scheme
         parts = auth_header.split()
+        debug_logger.debug(f"Auth header parts: {parts}")
+        
         if len(parts) != 2 or parts[0].lower() != "bearer":
+            debug_logger.debug(f"Invalid auth scheme: {parts[0] if parts else 'no parts'}")
             raise HTTPException(
                 status_code=401,
                 detail="Bearer authentication required",
@@ -63,14 +79,20 @@ class SecurityService:
             )
 
         token = parts[1]
+        debug_logger.debug(f"Extracted token: {token}")
+        debug_logger.debug(f"Admin tokens: {self.admin_tokens}")
+        debug_logger.debug(f"Marketing tokens: {self.marketing_tokens}")
         
         # Validate token
         if token not in self.admin_tokens and token not in self.marketing_tokens:
+            debug_logger.debug(f"Token not found in any token set")
             raise HTTPException(
                 status_code=401,
                 detail="Unauthorized",
                 headers={"WWW-Authenticate": "Bearer"},
             )
+        
+        debug_logger.debug(f"Token validated successfully")
         
         # Audit log the request
         await self._audit_log(token, request)
@@ -88,11 +110,14 @@ class SecurityService:
         Raises:
             HTTPException: If access is denied
         """
+        debug_logger.debug(f"Validating brain access - token: {token}, brain: {brain}")
         if token in self.marketing_tokens and brain != "marketing":
+            debug_logger.debug(f"Access denied to brain {brain} for marketing token")
             raise HTTPException(
                 status_code=403,
                 detail=f"Access denied to brain: {brain}"
             )
+        debug_logger.debug(f"Brain access validated successfully")
     
     async def _audit_log(self, token: str, request: Request):
         """Log request details for audit purposes."""
