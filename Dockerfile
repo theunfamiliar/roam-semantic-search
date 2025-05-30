@@ -28,8 +28,9 @@ RUN mkdir -p /app/logs/{server,deploy,audit,performance,data,search} && \
 COPY config/ ./config/
 COPY scripts/ ./scripts/
 
-# Copy the rest of the application code (changes most frequently)
-COPY . .
+# Copy application code without requirements.txt (prevents cache invalidation)
+COPY app/ ./app/
+COPY .coveragerc pytest.ini ./
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
