@@ -1,33 +1,37 @@
-from sentence_transformers import SentenceTransformer
+"""Script to reindex a brain using the indexing service."""
+
+import sys
+import os
 from pathlib import Path
 
-# Load model
-model = SentenceTransformer("all-MiniLM-L6-v2")
+# Add parent directory to Python path so we can import app
+sys.path.append(str(Path(__file__).parent.parent))
 
-# Folder with your .md files
-DATA_DIR = Path("./data")
-EMBEDDINGS = []
-CHUNKS = []
+import asyncio
+import argparse
+import logging
+from app.services.indexing import reindex_brain
+from app.utils.logging import setup_logging
 
-def load_md_files():
-    for path in DATA_DIR.glob("*.md"):
-        if path.stat().st_size == 0:
-            continue  # Skip empty files
-        with path.open(encoding="utf-8") as f:
-            content = f.read()
-            for para in content.split("\n\n"):
-                text = para.strip()
-                if len(text) < 10:
-                    continue
-                CHUNKS.append({"text": text, "source": str(path)})
+# Set up logging
+setup_logging()
+logger = logging.getLogger(__name__)
 
-def generate_embeddings():
-    texts = [chunk["text"] for chunk in CHUNKS]
-    return model.encode(texts, show_progress_bar=True)
+async def main():
+    """Main function to run reindexing."""
+    parser = argparse.ArgumentParser(description="Reindex a brain")
+    parser.add_argument("--brain", type=str, required=True, choices=["ideas", "work"],
+                      help="Brain to reindex (ideas or work)")
+    args = parser.parse_args()
+    
+    try:
+        logger.info(f"Starting reindex of {args.brain} brain")
+        result = await reindex_brain(args.brain)
+        logger.info(f"✅ Successfully reindexed {args.brain} brain")
+        logger.info(f"Processed {result['blocks_processed']} blocks in {result['duration']:.2f} seconds")
+    except Exception as e:
+        logger.error(f"❌ Failed to reindex {args.brain} brain", exc_info=True)
+        raise
 
-def reindex():
-    CHUNKS.clear()
-    EMBEDDINGS.clear()
-    load_md_files()
-    EMBEDDINGS.extend(generate_embeddings())
-    print(f"✅ Reindexed {len(CHUNKS)} chunks.")
+if __name__ == "__main__":
+    asyncio.run(main())

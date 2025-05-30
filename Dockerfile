@@ -36,4 +36,5 @@ COPY .coveragerc pytest.ini ./
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/ping || exit 1
 
-CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "8000", "--log-config", "config/logging.yaml"]
+# Start uvicorn with increased timeout
+CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "8000", "--log-config", "config/logging.yaml", "--timeout-keep-alive", "600"]
