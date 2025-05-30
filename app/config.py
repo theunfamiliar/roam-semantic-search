@@ -18,7 +18,7 @@ PASSWORD = os.getenv("PASSWORD", "secret")
 
 # Roam Configuration
 ROAM_GRAPH = os.getenv("ROAM_GRAPH")
-ROAM_TOKEN = os.getenv("ROAM_TOKEN")
+ROAM_API_TOKEN = os.getenv("ROAM_API_TOKEN")
 
 # Email Configuration
 EMAIL_TO = "james@dunndealpr.com"

@@ -2,13 +2,15 @@ import os
 import pytest
 import faiss
 import numpy as np
-from typing import Generator, Dict, Any
+from typing import Generator, Dict, Any, List
 from httpx import AsyncClient
 from fastapi.testclient import TestClient
 from faker import Faker
 import factory
 from app.models.schemas import SearchResult, SearchRequest
 from app.services.search import get_model
+from datetime import datetime
+import json
 
 fake = Faker()
 
@@ -28,8 +30,7 @@ def client() -> Generator:
 async def async_client() -> AsyncClient:
     """Create an AsyncClient instance for async tests."""
     from server import app
-    async with AsyncClient(app=app, base_url="http://test") as client:
-        yield client
+    return AsyncClient(app=app, base_url="http://test")
 
 @pytest.fixture
 def auth_headers() -> Dict[str, str]:
@@ -66,30 +67,43 @@ def search_results(size: int = 5) -> list[SearchResult]:
     return [SearchResultFactory() for _ in range(size)]
 
 @pytest.fixture
-def test_index():
+def test_index(tmp_path):
     """Create a test FAISS index with random vectors."""
-    index = faiss.IndexFlatL2(TEST_VECTOR_DIM)
-    vectors = np.random.random((100, TEST_VECTOR_DIM)).astype('float32')
+    dimension = 768  # BERT embedding dimension
+    index = faiss.IndexFlatL2(dimension)
+    vectors = np.random.random((10, dimension)).astype('float32')
     index.add(vectors)
-    return index
+    index_path = tmp_path / "test_index.faiss"
+    faiss.write_index(index, str(index_path))
+    return str(index_path)
 
 @pytest.fixture
-def test_metadata() -> list[Dict[str, Any]]:
-    """Create test metadata for FAISS results."""
-    return [
-        SearchResultFactory().dict()
-        for _ in range(100)
-    ]
+def test_metadata(tmp_path):
+    """Create test metadata file."""
+    metadata = {
+        "blocks": [
+            {
+                "uid": fake.uuid4(),
+                "content": fake.paragraph(),
+                "timestamp": int(datetime.now().timestamp() * 1000)
+            }
+            for _ in range(10)
+        ],
+        "timestamp": datetime.now().isoformat()
+    }
+    meta_path = tmp_path / "test_meta.json"
+    with open(meta_path, "w") as f:
+        json.dump(metadata, f)
+    return str(meta_path)
 
 @pytest.fixture
-def mock_roam_blocks() -> list[Dict[str, Any]]:
-    """Generate mock Roam Research blocks."""
+def mock_roam_blocks() -> List[Dict]:
+    """Create mock Roam blocks for testing."""
     return [
         {
-            "string": fake.paragraph(),
             "uid": fake.uuid4(),
-            "page_title": fake.sentence(),
-            "parent_uid": fake.uuid4()
+            "content": fake.paragraph(),
+            "timestamp": int(datetime.now().timestamp() * 1000)
         }
         for _ in range(20)
     ]
@@ -106,4 +120,4 @@ def setup_test_env(monkeypatch):
     monkeypatch.setenv("USERNAME", TEST_USERNAME)
     monkeypatch.setenv("PASSWORD", TEST_PASSWORD)
     monkeypatch.setenv("ROAM_GRAPH", "test-graph")
-    monkeypatch.setenv("ROAM_TOKEN", "test-token") 
+    monkeypatch.setenv("ROAM_API_TOKEN", "test-token") 

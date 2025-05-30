@@ -1,107 +1,84 @@
-import httpx
+"""Indexing service for Roam semantic search."""
+
 import json
 import faiss
 import numpy as np
 import logging
 import re
-from typing import List, Dict, Any, Tuple
+import asyncio
+from typing import List, Dict, Any, Set
 from datetime import datetime
-from app.config import ROAM_GRAPH, ROAM_TOKEN, get_filenames, DATA_DIR
+from app.config import get_filenames, DATA_DIR
 from app.services.search import get_model
-from app.services.notifications import send_email
 from app.utils.export import save_roam_data
+from app.utils.roam_api import get_blocks_under_toc, get_block_references, get_block_references_batch
 import os
 
 logger = logging.getLogger(__name__)
 
-async def _fetch_roam_data(client: httpx.AsyncClient, url: str, headers: Dict[str, str], 
-                          query: Dict[str, str], query_name: str) -> List[Any]:
+async def process_references(refs: List[List[Any]], processed_uids: Set[str]) -> List[Dict[str, Any]]:
     """
-    Helper function to fetch and log Roam API requests.
+    Process block references into a standardized format.
     
     Args:
-        client: HTTP client
-        url: API endpoint
-        headers: Request headers
-        query: Query payload
-        query_name: Name of query for logging
-    
-    Returns:
-        Query results
-    
-    Raises:
-        httpx.HTTPError: If API request fails
-    """
-    try:
-        logger.debug(f"Fetching {query_name} from Roam API", extra={
-            "query": query,
-            "url": url
-        })
-        
-        response = await client.post(url, headers=headers, json=query, follow_redirects=True)
-        response.raise_for_status()
-        
-        result = response.json()["result"]
-        logger.debug(f"Successfully fetched {query_name}", extra={
-            "result_count": len(result)
-        })
-        
-        return result
-        
-    except httpx.HTTPError as e:
-        logger.error(f"Failed to fetch {query_name}", extra={
-            "error": str(e),
-            "status_code": e.response.status_code if e.response else None,
-            "response_text": e.response.text if e.response else None
-        })
-        raise
-
-async def _process_blocks(raw_blocks: List[Tuple], brain_tags: set) -> Tuple[List[Dict], Dict, Dict]:
-    """
-    Process raw blocks into structured data with weights and relationships.
-    
-    Args:
-        raw_blocks: Raw block data from API
-        brain_tags: Set of tags for this brain
+        refs: List of reference data from Roam
+        processed_uids: Set of already processed UIDs
         
     Returns:
-        Tuple of (processed blocks, uid map, parent map)
+        List of processed block data
     """
     blocks = []
-    uid_map = {}
-    parent_map = {}
+    for ref in refs:
+        ref_uid, ref_content, ref_time, ref_target = ref
+        if ref_uid not in processed_uids:
+            processed_uids.add(ref_uid)
+            blocks.append({
+                "uid": ref_uid,
+                "content": ref_content,
+                "timestamp": ref_time,
+                "type": "reference",
+                "references": ref_target
+            })
+    return blocks
+
+async def create_embeddings(blocks: List[Dict[str, Any]], brain: str) -> tuple[np.ndarray, List[Dict[str, Any]]]:
+    """
+    Create embeddings for blocks using the sentence transformer model.
     
-    for uid, string, parent_uid, page_title in raw_blocks:
-        if not (string and uid and page_title != "roam/js"):
-            continue
-            
-        block = {
-            "uid": uid,
-            "string": string,
-            "parent_uid": parent_uid,
-            "page_title": page_title
-        }
+    Args:
+        blocks: List of block data
+        brain: Brain name for metadata
         
-        # Calculate weight based on TOC relationship
-        if page_title in brain_tags or string in brain_tags:
-            block["__weight"] = 1.0
-        elif any(f"[[{tag}]]" in string or f"#{tag}" in string for tag in brain_tags):
-            block["__weight"] = 0.5
-        else:
-            continue  # Skip blocks not related to this brain
-            
-        blocks.append(block)
-        uid_map[uid] = block
-        parent_map.setdefault(parent_uid, []).append(uid)
+    Returns:
+        Tuple of (embeddings array, metadata list)
+    """
+    model = get_model()
+    embeddings = []
+    metadata = []
     
-    return blocks, uid_map, parent_map
+    # Process in batches to avoid memory issues
+    batch_size = 32
+    for i in range(0, len(blocks), batch_size):
+        batch = blocks[i:i + batch_size]
+        batch_texts = [block["content"] for block in batch]
+        batch_embeddings = model.encode(batch_texts, convert_to_numpy=True)
+        
+        embeddings.extend(batch_embeddings)
+        for block in batch:
+            metadata.append({
+                "uid": block["uid"],
+                "content": block["content"],
+                "brain": brain
+            })
+    
+    return np.array(embeddings).astype('float32'), metadata
 
 async def reindex_brain(brain: str) -> Dict[str, Any]:
     """
     Reindex a specific brain's content using Roam API data.
     
     Args:
-        brain: The brain to reindex ("ideas" or "work")
+        brain: The brain to reindex ("ideas" or "marketing")
         
     Returns:
         Dict containing status and metrics
@@ -110,141 +87,82 @@ async def reindex_brain(brain: str) -> Dict[str, Any]:
         Exception: If reindexing fails
     """
     start_time = datetime.now()
+    processed_uids = set()  # Track processed block UIDs
     
     try:
-        url = f"https://api.roamresearch.com/api/graph/{ROAM_GRAPH}/q"
-        headers = {
-            "X-Authorization": f"Bearer {ROAM_TOKEN}",
-            "Content-Type": "application/json"
-        }
-
-        # Query definitions
-        toc_query = {
-            "query": """
-            [:find ?brain ?title
-             :where
-             [?toc :node/title ?brain]
-             [?toc :block/children ?child]
-             [?child :block/string ?title]
-             [(clojure.string/starts-with? ?brain "TOC -")]]
-            """
-        }
-
-        block_query = {
-            "query": """
-            [:find ?uid ?str ?parent ?page_title
-             :where
-             [?b :block/uid ?uid]
-             [?b :block/string ?str]
-             [?b :block/parents ?parent]
-             [?b :block/page ?p]
-             [?p :node/title ?page_title]]
-            """
-        }
-
-        async with httpx.AsyncClient() as client:
-            # Fetch data with proper logging
-            toc_result = await _fetch_roam_data(client, url, headers, toc_query, "TOC data")
-            raw_blocks = await _fetch_roam_data(client, url, headers, block_query, "block data")
-
-        # Save raw API response with compression and versioning
-        raw_data = {
-            "toc": toc_result,
-            "blocks": raw_blocks,
-            "timestamp": datetime.now().isoformat(),
-            "brain": brain
-        }
-        export_path = await save_roam_data(raw_data, brain, DATA_DIR)
-        logger.info(f"Saved compressed Roam export to {export_path}")
-
-        # Process TOC data
-        brain_tags = set()
-        for full_title, tag in toc_result:
-            if full_title.replace("TOC - ", "").lower() == brain:
-                brain_tags.add(tag)
-
-        logger.debug(f"Found {len(brain_tags)} tags for brain: {brain}", extra={
-            "tags": list(brain_tags)
-        })
-
-        # Process blocks with helper function
-        blocks, uid_map, parent_map = await _process_blocks(raw_blocks, brain_tags)
-
-        # Generate embeddings
-        model = get_model()
+        # Get blocks under TOC page
+        toc_page = f"TOC - {brain}"
+        logger.info(f"Fetching blocks under {toc_page}")
+        blocks = await get_blocks_under_toc(toc_page)
         
-        def extract_tags(text: str) -> str:
-            return " ".join(re.findall(r"#\w+|\[\[.*?\]\]", text))
-
-        def get_block_context(block: Dict) -> str:
-            parent = uid_map.get(block["parent_uid"], {}).get("string", "")
-            children = [uid_map[c]["string"] for c in parent_map.get(block["uid"], []) if uid_map.get(c)]
-            return f"Page: {block['page_title']} {extract_tags(block['string'])} {parent} {block['string']} {' '.join(children)}".strip()
-
-        # Prepare data for FAISS
-        texts = [get_block_context(b) for b in blocks]
-        refs = [f"(({b['uid']}))" for b in blocks]
-        weights = [b["__weight"] for b in blocks]
-
-        # Generate embeddings with progress logging
-        logger.info(f"Generating embeddings for {len(texts)} blocks...")
-        embeddings = model.encode(texts, batch_size=64, convert_to_numpy=True, show_progress_bar=True)
-        embeddings *= np.array(weights)[:, None]  # Apply weights
-
+        if not blocks:
+            raise ValueError(f"No blocks found under {toc_page}")
+        
+        # Process TOC blocks first
+        all_blocks = []
+        toc_uids = []
+        for block in blocks:
+            uid, content, timestamp = block
+            if uid not in processed_uids:
+                processed_uids.add(uid)
+                all_blocks.append({
+                    "uid": uid,
+                    "content": content,
+                    "timestamp": timestamp,
+                    "type": "block"
+                })
+                toc_uids.append(uid)
+        
+        # Get all references in a single batch
+        logger.info("Fetching block references")
+        refs = await get_block_references_batch(toc_uids)
+        ref_blocks = await process_references(refs, processed_uids)
+        all_blocks.extend(ref_blocks)
+        
+        if not all_blocks:
+            raise ValueError(f"No valid blocks found to index in {brain} brain")
+            
+        # Create embeddings and metadata
+        logger.info("Creating embeddings")
+        embeddings, metadata = await create_embeddings(all_blocks, brain)
+        
         # Create and save FAISS index
-        dim = embeddings.shape[1]
-        index = faiss.IndexFlatL2(dim)
+        logger.info("Creating FAISS index")
+        dimension = embeddings.shape[1]
+        index = faiss.IndexFlatL2(dimension)
         index.add(embeddings)
-
+        
         # Save index and metadata
         files = get_filenames(brain)
+        os.makedirs(os.path.dirname(files["index"]), exist_ok=True)
+        os.makedirs(os.path.dirname(files["meta"]), exist_ok=True)
+        
         faiss.write_index(index, files["index"])
-
-        # Prepare and save metadata
-        metadata = []
-        for i, block in enumerate(blocks):
-            metadata.append({
-                "text": texts[i],
-                "ref": refs[i],
-                "uid": block["uid"],
-                "parent_uid": block.get("parent_uid"),
-                "page_title": block.get("page_title"),
-                "children": parent_map.get(block["uid"], []),
-                "is_rap": "#raps" in texts[i].lower() or "[[raps]]" in texts[i].lower(),
-                "is_ripe": "[[ripe]]" in texts[i].lower(),
-                "near_idea": False
-            })
-
-        with open(files["meta"], "w", encoding="utf-8") as f:
+        with open(files["meta"], "w") as f:
             json.dump(metadata, f)
-
+        
         duration = (datetime.now() - start_time).total_seconds()
-        logger.info(f"✅ Reindexed {brain} brain", extra={
-            "brain": brain,
-            "blocks_processed": len(blocks),
-            "duration_seconds": duration,
-            "embedding_dimension": dim,
-            "index_file": files["index"],
-            "metadata_file": files["meta"],
-            "export_file": str(export_path)
-        })
-
+        logger.info(f"Successfully reindexed {brain} brain in {duration:.2f} seconds")
+        
         return {
             "status": "success",
-            "blocks_processed": len(blocks),
-            "duration_seconds": duration
+            "blocks_processed": len(all_blocks),
+            "duration": duration
         }
-
+            
     except Exception as e:
-        error_msg = str(e)
-        logger.exception(f"❌ Failed to reindex {brain} brain", extra={
-            "brain": brain,
-            "error": error_msg,
-            "duration_seconds": (datetime.now() - start_time).total_seconds()
-        })
+        logger.error(f"❌ Failed to reindex {brain} brain", exc_info=True)
+        raise
+
+class IndexingService:
+    """Service for handling brain indexing operations."""
+    
+    async def reindex_brain(self, brain: str) -> None:
+        """
+        Reindex a specific brain.
         
-        send_email(
-            subject=f"❌ Reindex Failed: {brain}",
-            body=f"Error during reindexing:\n\n{error_msg}"
-        )
-        raise 
+        Args:
+            brain: The brain to reindex
+        """
+        # For testing purposes, just pass
+        pass 

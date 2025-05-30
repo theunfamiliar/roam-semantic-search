@@ -1,3 +1,5 @@
+"""Reindex routes."""
+
 from fastapi import APIRouter, Depends, HTTPException
 from app.models.schemas import ReindexResponse
 from app.services.auth import authenticate
@@ -8,8 +10,8 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
-@router.post("/reindex", response_model=ReindexResponse)
-async def reindex_endpoint(auth: bool = Depends(authenticate)):
+@router.post("")
+async def reindex_endpoint(auth: bool = Depends(authenticate)) -> ReindexResponse:
     """
     Reindex both brains (ideas and work) from Roam API data.
     """
@@ -28,7 +30,4 @@ async def reindex_endpoint(auth: bool = Depends(authenticate)):
             
     except Exception as e:
         logger.exception("Reindex failed")
-        return ReindexResponse(
-            status="error",
-            error=str(e)
-        ) 
+        raise HTTPException(status_code=500, detail=str(e)) 

@@ -1,53 +1,89 @@
-"""Main FastAPI application module."""
+"""Main FastAPI application."""
 
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
-from app.utils.logging import setup_logging, get_logger
-from app.middleware.logging import LoggingMiddleware
+from fastapi import FastAPI, Depends, Request
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from typing import Optional
 
-# Initialize logging
-setup_logging()
-logger = get_logger("main")
-
-# Create FastAPI application
-app = FastAPI(
-    title="Roam Semantic Search",
-    description="Semantic search engine for Roam Research exports",
-    version="1.0.0"
+from app.services.security import SecurityService
+from app.services.search import SearchService
+from app.services.indexing import IndexingService
+from app.models.api import (
+    SearchRequest,
+    SearchResponse,
+    ReindexRequest,
+    ReindexResponse,
+    HealthResponse
 )
 
-# Add logging middleware
-app.add_middleware(LoggingMiddleware)
+app = FastAPI(title="Roam Semantic Search API")
+security_service = SecurityService()
+search_service = SearchService()
+indexing_service = IndexingService()
 
-@app.on_event("startup")
-async def startup_event():
-    """Log application startup."""
-    logger.info("Application starting up", extra={"event": "startup"})
+async def get_token(
+    request: Request,
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(HTTPBearer(auto_error=False))
+) -> str:
+    """Get and validate token from request."""
+    return await security_service.validate_token(credentials, request)
 
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Log application shutdown."""
-    logger.info("Application shutting down", extra={"event": "shutdown"})
+@app.get("/api/health", response_model=HealthResponse)
+async def health_check():
+    """Health check endpoint."""
+    return {"status": "ok"}
 
-@app.exception_handler(Exception)
-async def global_exception_handler(request: Request, exc: Exception):
-    """Global exception handler with logging."""
-    logger.error(
-        f"Unhandled exception occurred",
-        extra={
-            "path": request.url.path,
-            "method": request.method,
-            "error_type": exc.__class__.__name__,
-            "error_message": str(exc)
-        },
-        exc_info=True
+@app.get("/api/health/ping")
+async def ping():
+    """Simple ping endpoint."""
+    return {"message": "pong"}
+
+@app.post("/api/search", response_model=SearchResponse)
+async def search(
+    request: Request,
+    search_request: SearchRequest,
+    token: str = Depends(get_token)
+):
+    """
+    Search endpoint.
+    
+    Args:
+        request: The FastAPI request object
+        search_request: The search parameters
+        token: The validated authentication token
+        
+    Returns:
+        SearchResponse: The search results
+    """
+    # Validate brain access
+    security_service.validate_brain_access(token, search_request.brain)
+    
+    # Perform search
+    return await search_service.search(
+        query=search_request.query,
+        brain=search_request.brain,
+        top_k=search_request.top_k
     )
-    return JSONResponse(
-        status_code=500,
-        content={"detail": "Internal server error"}
-    )
 
-# Import and include routers
-from app.routers import search, data
-app.include_router(search.router, prefix="/api/search", tags=["search"])
-app.include_router(data.router, prefix="/api/data", tags=["data"]) 
+@app.post("/api/reindex", response_model=ReindexResponse)
+async def reindex(
+    request: Request,
+    reindex_request: ReindexRequest,
+    token: str = Depends(get_token)
+):
+    """
+    Reindex endpoint.
+    
+    Args:
+        request: The FastAPI request object
+        reindex_request: The reindex parameters
+        token: The validated authentication token
+        
+    Returns:
+        ReindexResponse: The reindex status
+    """
+    # Validate brain access
+    security_service.validate_brain_access(token, reindex_request.brain)
+    
+    # Perform reindex
+    await indexing_service.reindex_brain(reindex_request.brain)
+    return {"status": "success"} 

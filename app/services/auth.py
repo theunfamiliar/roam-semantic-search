@@ -1,15 +1,19 @@
-from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from app.config import USERNAME, PASSWORD
+"""Authentication service."""
 
-security = HTTPBasic()
+from fastapi import HTTPException, Depends
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+import secrets
+import os
+from typing import Optional
 
-def authenticate(credentials: HTTPBasicCredentials = Depends(security)) -> bool:
+security = HTTPBearer(auto_error=False)  # Don't auto-raise 403, we'll handle it
+
+async def authenticate(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)) -> bool:
     """
-    Authenticate incoming requests using Basic Auth.
+    Authenticate user with bearer token.
     
     Args:
-        credentials: The HTTP Basic Auth credentials
+        credentials: The authorization credentials
         
     Returns:
         bool: True if authentication successful
@@ -17,14 +21,32 @@ def authenticate(credentials: HTTPBasicCredentials = Depends(security)) -> bool:
     Raises:
         HTTPException: If authentication fails
     """
-    is_username_valid = credentials.username == USERNAME
-    is_password_valid = credentials.password == PASSWORD
-    
-    if not (is_username_valid and is_password_valid):
+    if not credentials:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Unauthorized. Use correct Basic Auth.",
-            headers={"WWW-Authenticate": "Basic"},
+            status_code=401,
+            detail="Not authenticated",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    if credentials.scheme.lower() != "bearer":
+        raise HTTPException(
+            status_code=401,
+            detail="Bearer authentication required",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    correct_token = os.getenv("API_TOKEN", "test-token")
+    
+    is_token_correct = secrets.compare_digest(
+        credentials.credentials.encode("utf8"),
+        correct_token.encode("utf8")
+    )
+    
+    if not is_token_correct:
+        raise HTTPException(
+            status_code=401,
+            detail="Unauthorized",
+            headers={"WWW-Authenticate": "Bearer"},
         )
     
     return True 

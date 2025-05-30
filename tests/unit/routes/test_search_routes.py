@@ -1,7 +1,7 @@
 import pytest
 from fastapi import HTTPException
 from app.routes.search import search_endpoint
-from app.models.schemas import SearchRequest
+from app.models.search import SearchRequest
 
 @pytest.mark.unit
 class TestSearchRoutes:
@@ -27,5 +27,17 @@ class TestSearchRoutes:
         request = SearchRequest(query="test", top_k=5)
         with pytest.raises(HTTPException) as exc:
             await search_endpoint(request, auth=True)
-        assert exc.value.status_code == 500
-        assert "Search failed" in str(exc.value.detail) 
+        assert exc.value.status_code == 422  # Validation errors should be 422
+        assert "Search failed" in str(exc.value.detail)
+
+    async def test_search_endpoint_not_found(self, monkeypatch):
+        """Test search endpoint file not found error."""
+        async def mock_search(*args, **kwargs):
+            raise FileNotFoundError("Index not found")
+        monkeypatch.setattr("app.routes.search.search", mock_search)
+        
+        request = SearchRequest(query="test", top_k=5)
+        with pytest.raises(HTTPException) as exc:
+            await search_endpoint(request, auth=True)
+        assert exc.value.status_code == 404
+        assert "Index not found" in str(exc.value.detail) 

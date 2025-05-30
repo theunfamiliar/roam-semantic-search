@@ -1,0 +1,256 @@
+2025-05-30 15:19:27,190 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:19:27,192 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:19:27,194 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:19:27,195 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:19:27,197 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:19:27,198 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:19:27,198 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:19:27,199 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:19:27,199 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:19:27,200 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:19:27,206 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,348 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,349 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,349 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,350 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,354 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,354 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,355 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,379 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,380 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,381 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,382 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,383 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,383 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,384 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,385 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,386 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:29:46,386 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:31:43,884 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:31:43,885 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:31:43,886 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:31:43,887 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:31:43,888 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:31:43,889 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:31:43,889 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:21,970 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:21,971 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:21,971 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:21,972 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:21,975 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:21,976 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:21,976 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:22,001 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:22,002 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:22,003 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:22,005 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:22,005 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:22,006 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:22,006 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:22,008 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:22,008 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:33:22,009 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:35:13,986 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:35:13,987 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:35:13,988 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:35:13,989 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:35:13,991 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:35:13,992 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:35:13,992 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,592 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,593 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,593 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,594 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,598 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,598 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,599 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,601 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,602 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,603 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,605 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,605 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,605 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,606 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,608 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,608 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:36:26,608 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:38:29,333 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:38:29,334 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:38:29,336 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:38:29,337 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:38:30,340 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:38:30,341 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:38:30,342 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,263 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,264 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,265 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,266 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,270 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,270 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,271 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,273 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,275 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,275 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,277 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,278 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,278 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,279 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,280 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,281 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:45:34,281 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:48:22,284 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:48:22,285 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:48:22,287 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:48:22,288 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:48:22,291 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:48:22,292 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:48:22,293 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,723 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,724 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,724 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,725 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,729 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,730 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,730 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,732 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,733 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,734 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,735 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,736 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,736 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,736 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,738 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,738 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:49:19,739 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:52:11,484 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:52:11,488 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:52:11,496 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:52:11,500 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:52:11,508 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:52:11,510 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:52:11,512 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,225 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,226 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,226 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,227 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,231 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,232 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,232 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,235 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,236 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,237 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,239 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,239 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,240 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,240 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,242 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,243 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:56:47,243 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,658 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,659 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,660 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,661 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,664 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,665 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,666 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,667 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,669 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,669 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,671 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,672 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,673 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,674 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,676 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,676 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 15:57:47,677 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 16:00:27,114 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 16:00:27,115 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 16:00:27,117 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 16:00:27,118 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Client: 127.0.0.1
+2025-05-30 16:01:02,409 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:01:02,410 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:01:02,410 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 5, 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:01:02,411 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 5, 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:01:02,414 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': '', 'top_k': 5}, Client: 127.0.0.1
+2025-05-30 16:01:02,415 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'top_k': -1}, Client: 127.0.0.1
+2025-05-30 16:01:02,415 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'invalid_brain'}, Client: 127.0.0.1
+2025-05-30 16:01:02,417 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:01:02,418 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:01:02,419 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 5, 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:01:02,421 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:01:02,421 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:01:02,422 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 10, 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:01:02,423 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 10, 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:01:02,425 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:01:02,426 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:01:02,426 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'invalid'}, Client: 127.0.0.1
+2025-05-30 16:04:05,398 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:04:05,400 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:04:05,402 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:04:05,404 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:05:11,870 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:05:11,871 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:05:11,871 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 5, 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:05:11,873 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 5, 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:05:11,877 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': '', 'top_k': 5}, Client: 127.0.0.1
+2025-05-30 16:05:11,878 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'top_k': -1}, Client: 127.0.0.1
+2025-05-30 16:05:11,879 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'invalid_brain'}, Client: 127.0.0.1
+2025-05-30 16:05:11,881 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:05:11,882 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:05:11,883 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 5, 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:05:11,884 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:05:11,885 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:05:11,885 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 10, 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:05:11,886 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 10, 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:05:11,888 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:05:11,888 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:05:11,889 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'invalid'}, Client: 127.0.0.1
+2025-05-30 16:07:51,795 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:07:51,796 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:07:51,797 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:07:51,798 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:07:51,801 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:09:57,414 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:09:57,415 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:09:57,416 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 5, 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:09:57,417 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 5, 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:09:57,420 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': '', 'top_k': 5}, Client: 127.0.0.1
+2025-05-30 16:09:57,421 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'top_k': -1}, Client: 127.0.0.1
+2025-05-30 16:09:57,422 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'invalid_brain'}, Client: 127.0.0.1
+2025-05-30 16:09:57,423 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:09:57,425 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:09:57,426 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 5, 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:09:57,427 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:09:57,428 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:09:57,428 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 10, 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:09:57,429 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 10, 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:09:57,430 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:09:57,431 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:09:57,431 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'invalid'}, Client: 127.0.0.1
+2025-05-30 16:11:57,405 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:11:57,419 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:11:57,425 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:11:57,427 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:11:57,435 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:22:05,437 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:22:05,438 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:22:05,439 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 5, 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:22:05,440 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 5, 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:22:05,444 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': '', 'top_k': 5}, Client: 127.0.0.1
+2025-05-30 16:22:05,445 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'top_k': -1}, Client: 127.0.0.1
+2025-05-30 16:22:05,445 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'invalid_brain'}, Client: 127.0.0.1
+2025-05-30 16:22:05,447 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:22:05,448 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:22:05,449 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 5, 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:22:05,451 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:22:05,452 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/reindex, Query Params: {}, Body: {'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:22:05,452 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 10, 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:22:05,453 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test query', 'top_k': 10, 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:22:05,455 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:22:05,455 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:22:05,456 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'invalid'}, Client: 127.0.0.1
+2025-05-30 16:24:15,837 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:24:15,838 - INFO - Request - Token: admin-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:24:15,841 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
+2025-05-30 16:24:15,842 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'ideas'}, Client: 127.0.0.1
+2025-05-30 16:24:15,845 - INFO - Request - Token: marketing-test-token, Method: POST, Endpoint: /api/search, Query Params: {}, Body: {'query': 'test', 'brain': 'marketing'}, Client: 127.0.0.1
