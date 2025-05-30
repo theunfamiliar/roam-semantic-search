@@ -1,3 +1,5 @@
+version: '3'
+
 services:
   app:
     build: .
@@ -11,11 +13,17 @@ services:
       - ./app:/app/app                  # For application code
     environment:
       - PORT=8000
+      - USERNAME=${USERNAME:-admin}
+      - PASSWORD=${PASSWORD:-secret}
+      - ROAM_GRAPH=${ROAM_GRAPH}
+      - ROAM_API_TOKEN=${ROAM_API_TOKEN}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/ping"]
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 10s
     restart: always
 
   nginx:
@@ -25,8 +33,8 @@ services:
       - "443:443"
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
-      - ./config/certbot/conf:/etc/letsencrypt
-      - ./config/certbot/www:/var/www/certbot
+      - ./data/certbot/www:/var/www/certbot
+      - ./data/certbot/conf:/etc/letsencrypt
     depends_on:
       - app
     restart: always
@@ -34,6 +42,6 @@ services:
   certbot:
     image: certbot/certbot
     volumes:
-      - ./config/certbot/conf:/etc/letsencrypt
-      - ./config/certbot/www:/var/www/certbot
+      - ./data/certbot/www:/var/www/certbot
+      - ./data/certbot/conf:/etc/letsencrypt
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'" 
